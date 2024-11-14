@@ -242,7 +242,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
   -  Black screen on built-in display when rotating or connecting to external display -> This was due to using custom resolution to enable HIDPI resolution. Workaround is to set display resolution back to   its default in prior.
   -  HDMI port coldplug not working -> Workaround is to inject force-online property.
   -  NO 4K resolution via external monitor -> Set DVMT Pre-allocated to 64MB using modGrubshell as there is no option for it in BIOS. (Make sure to remove framebuffer-stolenmem property)
-  -  Brightness control keymapping (F6/F7) -> Add scan code 40=61 and 41=66 in VoodooPS2Keyboard.kext-> info.plist -> Custom Profile -> Default -> Custom PS2 Map. There are alternative ways to remap Fn+F6/F7 key such as [Brightnesskeys.kext](https://github.com/acidanthera/BrightnessKeys) or [SSDT-BRT6.aml](https://osxlatitude.com/forums/topic/15661-acpi-patch-for-brightness-keys-on-dell-laptops/) which require patching _OSI, OSID and BRT6. For me, F6 and F7 will do.
+  -  Brightness control keymapping (F6/F7) -> Add scan code 40=65 and 41=66 in VoodooPS2Keyboard.kext-> info.plist -> Custom Profile -> Default -> Custom PS2 Map. There are alternative ways to remap Fn+F6/F7 key such as [Brightnesskeys.kext](https://github.com/acidanthera/BrightnessKeys) or [SSDT-BRT6.aml](https://osxlatitude.com/forums/topic/15661-acpi-patch-for-brightness-keys-on-dell-laptops/) which require patching _OSI, OSID and BRT6. For me, F6 and F7 will do.
   
 
   Audio

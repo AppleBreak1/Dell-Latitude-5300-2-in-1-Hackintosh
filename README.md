@@ -82,8 +82,7 @@ BIOS Version: 1.32.0
         setup_var 0x149A 0x1    (This will allow system to wake via USB peripheral devices(Keyboard/Mouse))
         setup_var 0x149A 0x0    (Back to default)
 
-     <img width="1000" alt="Screenshot 2024-11-12 at 10 09 46 AM" src="https://github.com/user-attachments/assets/d766416a-0fa6-447d-8931-173c06ec11fb">
-
+     <img width="1000" alt="385414764-d766416a-0fa6-447d-8931-173c06ec11fb" src="https://github.com/user-attachments/assets/b2b161bc-35fc-4163-9964-87a3e3e92569">
 
 
 
@@ -213,9 +212,9 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
 
 - Misc
   
-  Security -> ScanPolicy -> 0 (Set it to 2,687,747 if you wish to hide unnecessary entries)
+   - Security -> ScanPolicy -> 0 (Set it to 2,687,747 if you wish to hide unnecessary entries)
 
-  SecureBootModel -> j213
+   - SecureBootModel -> j213
 
 - PlatformInfo -> Generic -> SystemProductName -> MacBookPro15,4
 - PlatformInfo -> Generic -> UpdateSMBIOSMode -> Custom
@@ -223,12 +222,12 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
 
 # ACPI USB Port Mapping
 
-HS01/SS01 -> USB-C port 
-HS02/SS02 -> Left side USB-A port 
-HS03/SS03 -> Right side USB-A port 
-HS06 -> Webcam 
-HS08 -> Fingerprint Sensor / Smart Card Reader (Disabled)
-HS10 -> Bluetooth 
+- HS01/SS01 -> USB-C port 
+- HS02/SS02 -> Left side USB-A port 
+- HS03/SS03 -> Right side USB-A port 
+- HS06 -> Webcam 
+- HS08 -> Fingerprint Sensor / Smart Card Reader (Disabled)
+- HS10 -> Bluetooth 
 
 [Guide](https://github.com/AppleBreak1/Z490-Vision-D-Customac/tree/main/USB%20Ports)
 
@@ -239,8 +238,8 @@ HS10 -> Bluetooth
 
   Display 
 
-  -  Black screen on built in display on boot -> Inject enable-backlight-registers-fix was required to resolve this.
-  -  Black screen on built in display when rotating or connecting to external display -> This was due to using custom resolution to enable HIDPI resolution. Workaround is to set display resolution back to   its default in prior.
+  -  Black screen on built-in display on boot -> Inject enable-backlight-registers-fix was required to resolve this.
+  -  Black screen on built-in display when rotating or connecting to external display -> This was due to using custom resolution to enable HIDPI resolution. Workaround is to set display resolution back to   its default in prior.
   -  HDMI port coldplug not working -> Workaround is to inject force-online property.
   -  NO 4K resolution via external monitor -> Set DVMT Pre-allocated to 64MB using modGrubshell as there is no option for it in BIOS. (Make sure to remove framebuffer-stolenmem property)
   -  Brightness control keymapping (F6/F7) -> Add scan code 40=61 and 41=66 in VoodooPS2Keyboard.kext-> info.plist -> Custom Profile -> Default -> Custom PS2 Map. There are alternative ways to remap Fn+F6/F7 key such as [Brightnesskeys.kext](https://github.com/acidanthera/BrightnessKeys) or [SSDT-BRT6.aml](https://osxlatitude.com/forums/topic/15661-acpi-patch-for-brightness-keys-on-dell-laptops/) which require patching _OSI, OSID and BRT6. For me, F6 and F7 will do.
@@ -250,20 +249,20 @@ HS10 -> Bluetooth
 
   - ALC layout-id 28 or 77 works. Some other(incompatible) layout-ids can lead to kernel_task causing high CPU usage.
   - Unfortunately, headphone jack requires [AlcPlugFix](https://github.com/black-dragon74/ALCPlugFix-Swift) to be functional. (alc-verbs <01000000>, Node ID 0x19, Param 20, temporary disable SIP)
-  - Boot-Chime not working in OpenCanopy -> Looking at the debug log, it's similar to issue described [here](https://github.com/acidanthera/bugtracker/issues/963). Solution is to upsample audio file to 48kHz. However, I usually don't like to use Boot-Chime as AudioDXE.efi driver causes delay when posting. 
+  - Boot-Chime not working in OpenCanopy -> Looking at the debug log, it's similar to issue described [here](https://github.com/acidanthera/bugtracker/issues/963). The solution is to upsampling audio file to 48kHz. However, I usually don't like to use Boot-Chime as AudioDXE.efi driver causes delay when posting. 
 
   CPU Powermanagement
 
   - Inject CPUFriend.kext with configured CPUFriendDataProvider.kext.
-  - [VoltageShift.kext](https://github.com/sicreative/VoltageShift) to keep the fan noise down.
+  - [VoltageShift.kext](https://github.com/sicreative/VoltageShift) to disable Intel Turbo Boost and keep the fan noise down.
     
   Sleep/USB
 
   - Looking at the power event log, the system has been waking up every 1~2 hours due to all kinds of reasons -> Resolution; pmset to Hibernatemode 0, proximitywake 0, tcpkeepalive 0 and apply AppleRTC kernel patch.
-  - The system will only wake via power button or opening lid but not via external USB keyboard/mouse -> To wake via USB, USB Wake Support(only supported when AC adapter is plugged) needs to be enabled and is to be done in alternative way as this option is not available in BIOS.
+  - The system will only wake via power button or by opening the lid but not via external USB keyboard/mouse -> To wake via USB, USB Wake Support(only supported when AC adapter is plugged) option needs to be enabled and is to be done in alternative way as this option is not available in BIOS mode.
   - "Disk not ejected properly" pop-up notification with USB drive -> Enable USB Wake Support.
   - Bluetooth takes a while to reconnect upon waking -> Enable USB Wake Support.
-  - bluetoothd process with high CPU usage in activity monitor -> Enable USB Wake Support.
+  - bluetoothd process with high CPU usage on lid open wake -> Enable USB Wake Support.
 
     What if you are on battery power? Consider using [Bluesnooze](https://github.com/odlp/bluesnooze), [Blueutil](https://github.com/toy/blueutil) or manually turnoff Bluetooth.
   
@@ -276,11 +275,11 @@ HS10 -> Bluetooth
 CPU Fan
 
  - This laptop seems to have zero-fan mode where it won't start spinning until the temp reaches above 70c and stops spinning once the temp cools down to around 50c.
- - Has a single pipe heatsink -> Swapped with dual pipe heatsink from Latitude 5310 model(Had to bend one of the pipe a little bit). If I had known a difference it made, I wouldn't have bothered swapping. I think laptop cooling pad will probably do a better job.
+ - Has a single pipe heatsink -> Swapped with dual pipe heatsink from Latitude 5310 model(Had to bend one of the pipes a little bit). If I had known a difference it made, I wouldn't have bothered swapping. I think laptop cooling pad will probably do a better job.
 
 Wi-Fi/Bluetooth
 
- - Comes with Intel Dual Band Wireless AC 9560 -> Swapped with BCM94360NG module to enjoy Airplay/Airdrop/continuity features. MHF4 extension cable was required as one(main) of the two antenna cable was too short to reach the main antenna port on BCM94360 module.
+ - Comes with Intel Dual Band Wireless AC 9560 -> Swapped with BCM94360NG module to enjoy Airplay/Airdrop/continuity features. MHF4 extension cable was required as one(main) of the two antenna cables was too short to reach the main antenna port on BCM94360 module.
  
 
 WWAN slot
@@ -290,7 +289,8 @@ WWAN slot
       
 # Geekbench 6
 
-![Screen Shot 2024-11-13 at 10 01 50 AM](https://github.com/user-attachments/assets/65148185-2ac1-4d57-a411-68e065c5b668)
+
+![385889795-65148185-2ac1-4d57-a411-68e065c5b668](https://github.com/user-attachments/assets/760971ca-7612-457b-a335-0501f2f4c8aa)
 
 
 

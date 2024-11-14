@@ -1,8 +1,8 @@
 # Dell Latitude 5300 2-in-1
+<br>
 
-Bootloader: OpenCore
+<img width="360" src="https://github.com/user-attachments/assets/449ce9b6-2cf9-44c6-8945-351bef1eb913">
 
-OS: macOS Ventura
 
 # Hardware Specification
 

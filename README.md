@@ -55,11 +55,11 @@ Intel Turbo boost -> Disabled for Windows 10 to reduce fan noise, sacrificing pe
 
   ** Note that in order to boot macOS, only change required to make from its default setting is "Secure Boot Enable" **
 
-# Grubshell BIOS Mod
+# Grub Shell BIOS Mod
 
 These modifications in BIOS are not required to boot macOS at all and can be ignored, but is done to enable features that are otherwise would not be available. 
 
-To change below BIOS settings, [ModGrubShell](https://github.com/datasone/grub-mod-setup_var/releases) is required
+To change below BIOS settings, [ModGrub](https://github.com/datasone/grub-mod-setup_var/releases) is required
 
 For Dell BIOS extraction to find offset, please refer to Dreamwhite's [guide](https://github.com/dreamwhite/bios-extraction-guide).
 
@@ -186,7 +186,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
       |  AAPL,ig-platform-id | <00009B3E>   |   |
       |  device-id | <9B3E0000>	| |
       |  enable-backlight-registers-fix | <01000000> | Required to prevent Blackscreen |
-      |  framebuffer-stolenmem | <00003001> | Remove this property if DVMT is set to 64MB (Modified in Grubshell) |
+      |  framebuffer-stolenmem | <00003001> | Remove this property if DVMT is set to 64MB (Modified in Grub shell) |
       |  framebuffer-patch-enable | <01000000> | Enables framebuffer patch 	|
       |  framebuffer-con0-enable    | <01000000> | 	|
       |  framebuffer-con0-alldata   | <00000800 02000000 98000000> | BusID 0; Pipe 8; LVDS 0002; Flags 0098 |
@@ -259,7 +259,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
   -  Black screen on built-in display -> Inject enable-backlight-registers-fix was required to resolve this.
   -  Black screen on built-in display when rotating or connecting to external display -> This was due to using custom resolution to enable HIDPI resolution. Workaround is to set display resolution back to   its default in prior.
   -  HDMI port coldplug not working -> Workaround is to inject force-online property.
-  -  NO 4K resolution via external monitor -> Set DVMT Pre-allocated to 64MB using modGrubshell as there is no option for it in BIOS. (Make sure to remove framebuffer-stolenmem property)
+  -  NO 4K resolution via external monitor -> Set DVMT Pre-allocated to 64MB using modGrub as there is no option for it in BIOS. (Make sure to remove framebuffer-stolenmem property)
   -  Brightness control keymapping (F6/F7) -> Add scan code 40=65 and 41=66 in VoodooPS2Keyboard.kext-> info.plist -> Custom Profile -> Default -> Custom PS2 Map. There are alternative ways to remap Fn+F6/F7 key such as [Brightnesskeys.kext](https://github.com/acidanthera/BrightnessKeys) or [SSDT-BRT6.aml](https://osxlatitude.com/forums/topic/15661-acpi-patch-for-brightness-keys-on-dell-laptops/) which require patching _OSI, OSID and BRT6. For me, F6 and F7 will do.
   
 

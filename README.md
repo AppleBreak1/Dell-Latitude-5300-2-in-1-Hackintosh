@@ -124,14 +124,32 @@ Note:
 
 - Airplay/Airdrop/Handoff/Continuity including iPhone as webcam (Requires natively supported Wi-Fi/BT card such as BCM94360NG)
 
-- AirplaytoMac/Sidecar/Universal Control (Requires natively supported Wi-Fi/BT card such as BCM94360NG)
-  
+- AirplaytoMac/Sidecar/Universal Control (Requires natively supported Wi-Fi/BT card such as BCM94360NG)    
  
 # Not Working
 
 - DRM in Safari/TV+ (Chrome browser will do)
 - Fingerprint sensor
 - Wake via built-in trackpad/keyboard
+
+# macOS
+
+macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also be possible)
+
+  - macOS High Sierra - Catalina
+    
+    - Set SecureBootModel -> Disabled
+    - UEFI -> APFS -> MinDate and MinVersion -> -1
+    - IGPU may require some spoofing in macOS High Sierra. Refer to [WhateverGreen Manual](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md) for supported ig-platform-id
+ 
+  - macOS Big Sur ~ Ventura
+
+    - Works without making any changes to posted EFI.
+
+  - macOS Sonoma 14.4+
+
+    - To install or update to Sonoma 14.4+, SecureBootModel needs to disabled.
+    - For macOS Sonoma+, Broadcom Wi-Fi has to depend on OLCP patch to be functional.
 
 # OpenCore Config.plist
 

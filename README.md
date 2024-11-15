@@ -202,6 +202,9 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
       |  force-online | <01000000> 	| Use this property to workaround coldplug not working on HDMI Port |
 
 
+      Please refer to [WhateverGreen Manual](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md) for more detailed explanation.
+
+
 - Kernel
 
   Add:

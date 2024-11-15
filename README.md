@@ -238,7 +238,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
 
   Display 
 
-  -  Black screen on built-in display on boot -> Inject enable-backlight-registers-fix was required to resolve this.
+  -  Black screen on built-in display -> Inject enable-backlight-registers-fix was required to resolve this.
   -  Black screen on built-in display when rotating or connecting to external display -> This was due to using custom resolution to enable HIDPI resolution. Workaround is to set display resolution back to   its default in prior.
   -  HDMI port coldplug not working -> Workaround is to inject force-online property.
   -  NO 4K resolution via external monitor -> Set DVMT Pre-allocated to 64MB using modGrubshell as there is no option for it in BIOS. (Make sure to remove framebuffer-stolenmem property)
@@ -249,7 +249,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
 
   - ALC layout-id 28 or 77 works. Some other(incompatible) layout-ids can lead to kernel_task causing high CPU usage.
   - Unfortunately, the headphone jack on this laptop requires [AlcPlugFix](https://github.com/black-dragon74/ALCPlugFix-Swift) to be functional. (alc-verbs <01000000>, Node ID 0x19, Param 20, temporary disable SIP)
-  - Boot-Chime not working in OpenCore boot menu -> Looking at the debug log, it's similar to issue described [here](https://github.com/acidanthera/bugtracker/issues/963). The solution is to upsampling audio file to 48kHz. However, I usually don't like to use Boot-Chime as AudioDXE.efi driver causes delay when posting. 
+  - Boot-Chime not working in OpenCore boot menu -> Looking at the debug log, it's similar to issue described [here](https://github.com/acidanthera/bugtracker/issues/963). The solution is to upsample audio file to 48kHz. However, I usually don't like to use Boot-Chime as AudioDXE.efi driver causes delay when posting. 
 
   CPU Powermanagement
 
@@ -258,8 +258,8 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
     
   Sleep/USB
 
-  - Looking at the power event log, the system has been waking up every 1~2 hours due to all kinds of reasons -> Resolution; pmset to Hibernatemode 0, proximitywake 0, tcpkeepalive 0 and apply AppleRTC kernel patch.
-  - The system will only wake via power button or by opening the lid but not via external USB keyboard/mouse -> To wake via USB, USB Wake Support(only supported when AC adapter is plugged) option needs to be enabled and is to be done in alternative way as this option is not available in BIOS mode.
+  - Looking at the power event log, the system has been waking up every 1~2 hours due to all kinds of reasons -> The solution is to pmset to Hibernatemode 0, proximitywake 0, tcpkeepalive 0 and apply AppleRTC kernel patch.
+  - The system will only wake via power button or by opening the lid, but not via external USB keyboard/mouse -> To wake via USB, USB Wake Support(only supported when AC adapter is plugged) option needs to be enabled and is to be done in alternative way as this option is not available in BIOS mode.
   - "Disk not ejected properly" pop-up notification with USB drive -> Enable USB Wake Support.
   - Bluetooth takes a while to reconnect upon waking -> Enable USB Wake Support.
   - bluetoothd process with high CPU usage on lid open wake -> Enable USB Wake Support.
@@ -274,9 +274,10 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
 
 CPU Fan
 
- - This laptop seems to have zero-fan mode where it won't start spinning until the temp reaches above 70c and stops spinning once the temp cools down to around 50c.
+ - This laptop seems to have a fan curve mode where it won't start spinning until the temp reaches above 70c and stops spinning once the temp cools down to around 50c (Optimized setting in Thermal Management).
  - Has a single pipe heatsink -> Swapped with dual pipe heatsink from Latitude 5310 model(Had to bend one of the pipes a little bit). If I had known a difference it made, I wouldn't have bothered swapping. I think laptop cooling pad will probably do a better job.
-
+ - The CPU fan can be controlled with MacsFanControl app which is very limited in terms of what you can control. The fan RPM can be adjusted from 3400 ~ 6000RPM at constant. Do note that this will only work if Fan Control Override is enabled via BIOS mod. This feature is not accessible from the BIOS menu.
+   
 Wi-Fi/Bluetooth
 
  - Comes with Intel Dual Band Wireless AC 9560 -> Swapped with BCM94360NG module to enjoy Airplay/Airdrop/continuity features. MHF4 extension cable was required as one(main) of the two antenna cables was too short to reach the main antenna port on BCM94360 module.
@@ -284,7 +285,7 @@ Wi-Fi/Bluetooth
 
 WWAN slot
 
-- Looking at the motherboard's [schematic diagram of Dell 5300](https://laptop-schematics.com/view/11853/), it does seem to support SSD via WWAN Slot. However, it did not work with B+M key 2242 M.2 (NVME/SATA)SSD. What I hadn't try was enabling SATA ports in BIOS mod. All the SATA ports are disabled by default and not accessible in BIOS mode. Maybe enabling one of those SATA ports might work with M.2 SATA SSD. 
+- Looking at the motherboard's [schematic diagram of Dell 5300](https://laptop-schematics.com/view/11853/), it does seem to support SSD via WWAN Slot. However, it did not work with B+M key 2242 M.2 (NVME/SATA)SSD. What I hadn't try was enabling SATA ports in BIOS mod. All the SATA ports are disabled by default and not accessible in BIOS menu. Maybe enabling one of those SATA ports might work with M.2 SATA SSD. 
 
       
 # Geekbench 6

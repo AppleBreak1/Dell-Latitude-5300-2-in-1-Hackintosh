@@ -344,22 +344,6 @@
 			</dict>
 			<key>PciRoot(0x0)/Pci(0x2,0x0)</key>
 			<dict>
-				<key>#backlight-smoother-interval</key>
-				<data>
-				BQAAAA==
-				</data>
-				<key>#backlight-smoother-steps</key>
-				<data>
-				GQAAAA==
-				</data>
-				<key>#backlight-smoother-threshhold</key>
-				<data>
-				LAEAAA==
-				</data>
-				<key>#enable-backlight-smoother</key>
-				<data>
-				AQAAAA==
-				</data>
 				<key>#force-online</key>
 				<data>
 				AQAAAA==
@@ -368,11 +352,27 @@
 				<data>
 				AACbPg==
 				</data>
+				<key>backlight-smoother-interval</key>
+				<data>
+				BQAAAA==
+				</data>
+				<key>backlight-smoother-lowerbound</key>
+				<data>
+				vAIAAA==
+				</data>
+				<key>backlight-smoother-steps</key>
+				<data>
+				GQAAAA==
+				</data>
 				<key>device-id</key>
 				<data>
 				mz4AAA==
 				</data>
 				<key>enable-backlight-registers-fix</key>
+				<data>
+				AQAAAA==
+				</data>
+				<key>enable-backlight-smoother</key>
 				<data>
 				AQAAAA==
 				</data>

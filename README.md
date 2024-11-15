@@ -182,7 +182,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
     - ALC295 audio layout-id <4D000000>
     - Intel UHD-620
       | Property 	| Data 	| Remarks 	|
-      | --- | --- | --- |
+      | :---: | :---: | :---: |
       |  AAPL,ig-platform-id | <00009B3E>   |   |
       |  device-id | <9B3E0000>	| |
       |  enable-backlight-registers-fix | <01000000> | Required to prevent Blackscreen |
@@ -197,7 +197,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
       |  enable-backlight-smoother | <01000000> 	| Brightness control smoothing	|
       |  backlight-smoother-steps | <19000000> 	| |
       |  backlight-smoother-interval | <05000000> 	| |
-      |  backlight-smoother-lowerbound | <BC020000> 	| Sets the built-in screen's minimum brightness level, preventing screen from going completely dark at its lowest |
+      |  backlight-smoother-lowerbound |<BC020000| Sets the built-in screen's minimum brightness level, preventing screen from going completely dark at its lowest |
       |  rps-control | <01000000> 	| Improve iGPU performance |
       |  force-online | <01000000> 	| Use this property to workaround coldplug not working on HDMI Port |
 

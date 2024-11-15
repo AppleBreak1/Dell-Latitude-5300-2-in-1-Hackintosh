@@ -55,7 +55,7 @@ Intel Turbo boost -> Disabled for Windows 10 to reduce fan noise, sacrificing pe
 
   ** Note that in order to boot macOS, only change required to make from its default setting is "Secure Boot Enable" **
 
-# Grub Shell BIOS Mod
+# BIOS Mod
 
 These modifications in BIOS are not required to boot macOS at all and can be ignored, but is done to enable features that are otherwise would not be available. 
 

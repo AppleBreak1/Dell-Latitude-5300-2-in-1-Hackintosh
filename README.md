@@ -141,7 +141,7 @@ macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also
 
   - macOS High Sierra - Catalina
     
-    - SMBIOS -> MacBookPro15,2
+    - SMBIOS -> MacBookPro15,2 (For High Sierra)
     - Set SecureBootModel -> Disabled
     - UEFI -> APFS -> MinDate and MinVersion -> -1
     - IGPU may require some spoofing in macOS High Sierra. Refer to [WhateverGreen Manual](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md) for supported ig-platform-id

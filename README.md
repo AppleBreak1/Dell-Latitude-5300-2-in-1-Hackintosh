@@ -137,7 +137,7 @@ Note:
 
 # macOS
 
-macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also be possible)
+macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also be possible with some spoofing)
 
   - macOS High Sierra - Catalina
     

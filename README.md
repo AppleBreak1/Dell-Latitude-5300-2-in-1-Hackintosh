@@ -19,7 +19,7 @@ Touchscreen: WCOM48E2 (Wacom)
 
 Wi-Fi/BT Card: BCM94360NG NGFF M.2 (Swapped from Intel® Dual Band Wireless AC 9560; However, it requires MHF4 cable extension)
 
-SSD: SK Hynix PC 401 512GB (Both macOS and Windows on the same drive; M.2 SSD support via WWAN slot?)
+SSD: SK Hynix PC 401 512GB (Both macOS and Windows on the same drive)
 
 Audio: ALC295/ALC3254 (Layout-ID 77, Headphone jack requires ALCPlugFix to be functional)
 
@@ -377,8 +377,7 @@ Wi-Fi/Bluetooth
 
 WWAN slot
 
-- Looking at the motherboard's [schematic diagram of Dell 5300](https://laptop-schematics.com/view/11853/), it does seem to support SSD via WWAN Slot. However, it did not work with B+M key 2242 M.2 (NVME/SATA)SSD. What I hadn't try was enabling SATA ports in BIOS mod. All the SATA ports are disabled by default and not accessible in BIOS menu. Maybe enabling one of those SATA ports might work with M.2 SATA SSD. 
-
+- Looking at the motherboard's [schematic diagram of Dell 5300](https://laptop-schematics.com/view/11853/), it does seem to support SSD via WWAN Slot. However, it did not work with B+M key 2242 M.2 (NVME/SATA)SSD.
       
 # Geekbench 6
 

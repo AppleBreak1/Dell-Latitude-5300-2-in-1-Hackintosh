@@ -127,11 +127,13 @@ Note:
 
 - Airplay/Airdrop/Handoff/Continuity including iPhone as webcam (Requires natively supported Wi-Fi/BT card such as BCM94360NG)
 
-- AirplaytoMac/Sidecar/Universal Control (Requires natively supported Wi-Fi/BT card such as BCM94360NG)    
+- AirplaytoMac/Sidecar/Universal Control (Requires natively supported Wi-Fi/BT card such as BCM94360NG)
+
+- Apple Music (Requires Unfairgva=7; Do not use this argument with igfxfw=2 on IGPU only configuration) 
  
 # Not Working
 
-- DRM in Safari/TV+ (Chrome browser will do)
+- DRM in Safari/Apple TV+ (Chrome browser will do)
 - Fingerprint sensor
 - Wake via built-in trackpad/keyboard
 

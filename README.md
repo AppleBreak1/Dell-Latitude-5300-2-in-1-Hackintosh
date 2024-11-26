@@ -129,7 +129,7 @@ Note:
 
 - AirplaytoMac/Sidecar/Universal Control (Requires natively supported Wi-Fi/BT card such as BCM94360NG)
 
-- Apple Music (Requires Unfairgva=7; Do not use this argument with igfxfw=2 on IGPU only configuration) 
+- Apple Music Lossless Audio ([unfairgva=4](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.Chart.md); by spoofing board ID to iMacPro1,1(iGPU-less), lossess audio works in Apple Music; however, do note that spoofing board-ID to iMacPro1,1 on iGPU only system may break iGPU encoding/decoding functions and seemingly have issues with rps-control patch or Apple GuC firmware as the iGPU clock frequency and the power consumption can get stuck at max. This behavior is triggered when attempting video playback while having Apple Music play) 
  
 # Not Working
 

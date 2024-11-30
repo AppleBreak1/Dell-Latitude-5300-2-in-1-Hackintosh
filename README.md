@@ -217,7 +217,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
   Add:
 
      - VirtualSMC and its plugins
-     - SMCBatteryManager (Required for correct battery status/No battery patching needed)
+     - SMCBatteryManager (Required for correct battery status/No additional battery patching needed; all are 8-bit)
      - SMCLightsensor (Ambient Light Sensor; works with SSDT-ALS0.aml)
      - SMCDellSensors (Needed for Dell CPU fan monitoring)
      - Lilu/AppleALC/WhateverGreen 

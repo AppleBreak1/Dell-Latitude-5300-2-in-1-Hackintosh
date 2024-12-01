@@ -17,7 +17,7 @@ Display: 13.3 FHD 1920 x 1080 IPS (Chi Mei: CMN1382)
 
 Touchscreen: WCOM48E2 (Wacom) 
 
-Wi-Fi/BT Card: BCM94360NG NGFF M.2 (Swapped from Intel® Dual Band Wireless AC 9560; However, it requires MHF4 cable extension)
+Wi-Fi/BT Card: BCM94360NG NGFF M.2 (Swapped from Intel® Dual Band Wireless AC 9560; extension cable required)
 
 SSD: SK Hynix PC 401 512GB (Both macOS and Windows on the same drive)
 

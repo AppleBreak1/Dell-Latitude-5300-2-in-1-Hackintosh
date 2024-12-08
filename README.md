@@ -154,7 +154,7 @@ macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also
  
   - macOS Big Sur ~ Ventura
 
-    - Works without making any changes to posted EFI.
+    - Works without making any changes to the posted EFI.
 
   - macOS Sonoma 14.4+
 
@@ -283,7 +283,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
 
   - ALC layout-id 28 or 77 works. Some other(incompatible) layout-ids can lead to kernel_task causing high CPU usage.
   - Unfortunately, the headphone jack on this laptop requires [AlcPlugFix](https://github.com/black-dragon74/ALCPlugFix-Swift) to be functional. (alc-verbs <01000000>, Node ID 0x19, Param 20, temporary disable SIP)
-  - Boot-Chime not working in OpenCore boot menu -> Looking at the debug log, it's similar to issue described [here](https://github.com/acidanthera/bugtracker/issues/963). The solution is to upsample audio file to 48kHz. However, I usually don't like to use Boot-Chime as AudioDXE.efi driver causes delay when posting. 
+  - Boot-Chime not working in OpenCore boot menu -> Looking at the debug log, it's similar to issue described [here](https://github.com/acidanthera/bugtracker/issues/963). The solution is to upsample audio file to 48kHz. However, I usually don't like to use Boot-Chime as AudioDXE.efi driver causes a delay when the system posts and breaks audio in Windows. 
 
   CPU Powermanagement
 
@@ -317,7 +317,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
 
       - Misc -> Boot -> Hibernatemode -> NVRAM
       - Misc -> Boot -> HibernateSkipsPicker -> Yes
-      - Disable AppleRTC kernel patch if enabled (patch to disable scheduled RTC alarm wake)
+      - Do not apply AppleRTC kernel patch if applied (patch to disable scheduled RTC alarm wake)
       - Inject [HibernationFixup.kext](https://github.com/acidanthera/HibernationFixup)
       - Add boot-arg -> hbfx-ahbm=5 (Need this flag with value of at least 1 to put system in standby mode; refer to its [manual](https://github.com/acidanthera/HibernationFixup) for various configuration)
       - Set standbydelay time that suits your need in terminal (This sets the RTC alarm wake schedule). The system will darkwake from normal sleep as set by standbydelay argument then decides whether to transition to standby mode. If transions to standby, it saves current session to disk in var/vm/sleepimage and turns off some of the hardware systems to save power)

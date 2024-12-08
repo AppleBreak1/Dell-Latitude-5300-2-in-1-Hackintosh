@@ -23,6 +23,8 @@ SSD: SK Hynix PC 401 512GB (Both macOS and Windows on the same drive)
 
 Audio: ALC295/ALC3254 (Layout-ID 77, Headphone jack requires ALCPlugFix to be functional)
 
+Pen: Dell Premium Active Pen PN579X
+
 Left side ports: 
 
   - USB-C (USB 3.1 Gen 2 10Gbps; DisplayPort (4K60FPS); Thunderbolt port comes as an option)
@@ -114,6 +116,8 @@ Note:
 - Trackpad/Touchscreen with gestures
 
 - Keyboard (Volume+/-/Mute with Fn+F1/F2/F3, brightness +/- with F6/F7, keyboard backlight with Fn+F5)
+
+- Pen PN579X : Limited functionality but pen hovering and top barrel button (right click) works.
 
 - Display: 4K60FPS resolution via USB-C(DP-Alt-Mode) port / 4K30FPS via HDMI1.4b port / Dim display on battery
 

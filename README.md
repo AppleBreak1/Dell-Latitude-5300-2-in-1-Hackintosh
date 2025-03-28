@@ -375,7 +375,24 @@ CPU Fan
 Wi-Fi/Bluetooth
 
  - Comes with Intel Dual Band Wireless AC 9560 -> Swapped with BCM94360NG module to enjoy Airplay/Airdrop/continuity features. MHF4 extension cable was required as one(main) of the two antenna cables was too short to reach the main antenna port on BCM94360 module.
+<<<<<<< HEAD
  
+=======
+
+ - BCM94360NG speed issue with macOS
+
+   You will find discussion about this problem from Acidenthera bugtracker #[1532](https://github.com/acidanthera/bugtracker/issues/1532) with possible workaround
+   
+   On Windows, internet speed works fine as it should with link speed up to 866 Mbps. However on macOS, speed becomes an issue. You'll notice that Tx rate is maxed at 434 Mbps with limited spatial stream to 1 (NSS=1) on cold boot. To gain its maximum capable speed, it seems that only workaround for now is to warm boot from Windows to macOS while having Broadcom Network Adapter driver version [7.35.295.2](https://www.catalog.update.microsoft.com/Search.aspx?q=Broadcom%20802.11n%20Network%20Adapter) (7/19/2015) installed. Note that this will only work with this specific version of drive.
+
+Battery 
+
+ - N2K62 LCL (60 WHr, Long Cycle Life /1000 charge cycle) pack. At the time of testing, battery max capacity at 71.6% due to battery degradation.
+ - In BIOS, battery is configured to be start charging when below 50% and stop charging when at 83%
+ - Based on the testing with above setup and brightness level around 80%, the battery would last about 3 hrs when watching the 1080P 60FPS Youtube video. The CPU total package power consumption reporting during the video playback arounds 2.5W ~ 3.5W.
+ - Disabling touchscreen and reducing brightness level may help with preserving battery life. 
+   
+>>>>>>> dacda1f (Update README.md)
 
 WWAN slot
 

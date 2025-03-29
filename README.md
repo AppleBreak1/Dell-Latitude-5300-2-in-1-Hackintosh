@@ -332,7 +332,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
 
       - Misc -> Boot -> Hibernatemode -> NVRAM
       - Misc -> Boot -> HibernateSkipsPicker -> Yes
-      - Do not apply AppleRTC kernel patch if applied (patch to disable scheduled RTC alarm wake scheduling)
+      - Do not apply AppleRTC kernel patch if applied (patch to disable RTC wake scheduling)
       - Inject [HibernationFixup.kext](https://github.com/acidanthera/HibernationFixup)
       - Add boot-arg -> hbfx-ahbm=5 (Need this flag with value of at least 1 to put system in standby mode; refer to its [manual](https://github.com/acidanthera/HibernationFixup) for various configuration)
       - Set standbydelay time that suits your need in terminal (This sets the RTC alarm wake scheduling). The system will darkwake from normal sleep as set by standbydelay argument then decides whether to transition to standby mode. If transions to standby, it saves current session to disk in var/vm/sleepimage and turns off some of the hardware systems to save power)

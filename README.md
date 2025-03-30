@@ -17,11 +17,13 @@ Display: 13.3 FHD 1920 x 1080 IPS (Chi Mei: CMN1382)
 
 Touchscreen: WCOM48E2 (Wacom) 
 
-Wi-Fi/BT Card: BCM94360NG NGFF M.2 (Swapped from Intel® Dual Band Wireless AC 9560; However, it requires MHF4 cable extension)
+Wi-Fi/BT Card: BCM94360NG NGFF M.2 (Swapped from Intel® Dual Band Wireless AC 9560; extension cable required)
 
 SSD: SK Hynix PC 401 512GB (Both macOS and Windows on the same drive)
 
 Audio: ALC295/ALC3254 (Layout-ID 77, Headphone jack requires ALCPlugFix to be functional)
+
+Pen: Dell Premium Active Pen PN579X
 
 Left side ports: 
 
@@ -115,6 +117,8 @@ Note:
 
 - Keyboard (Volume+/-/Mute with Fn+F1/F2/F3, brightness +/- with F6/F7, keyboard backlight with Fn+F5)
 
+- Pen PN579X : Limited functionality but pen hovering and top barrel button (right click) works.
+
 - Display: 4K60FPS resolution via USB-C(DP-Alt-Mode) port / 4K30FPS via HDMI1.4b port / Dim display on battery
 
 - Built-in Camera. (Though, much better image with using iPhone as webcam)
@@ -129,12 +133,13 @@ Note:
 
 - AirplaytoMac/Sidecar/Universal Control (Requires natively supported Wi-Fi/BT card such as BCM94360NG)
 
-- Apple Music Lossless Audio ([unfairgva=4](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.Chart.md); by spoofing board ID to iMacPro1,1(iGPU-less), lossess audio works in Apple Music; however, do note that spoofing board-ID to iMacPro1,1 on iGPU only system may break iGPU encoding/decoding functions and seemingly have issues with rps-control patch or Apple GuC firmware as the iGPU clock frequency and the power consumption can get stuck at max. This behavior is triggered when attempting video playback while having Apple Music play) 
+- Apple Music Lossless Audio ([unfairgva=4](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.Chart.md); by spoofing board ID to iMacPro1,1(iGPU-less), lossless audio works in Apple Music; however, do note that spoofing board-ID to iMacPro1,1 on iGPU only system may break iGPU encoding/decoding functions and seemingly have issues with rps-control patch or Apple GuC firmware as the iGPU clock frequency and the power consumption can get stuck at max. This behavior is triggered when attempting video playback while having Apple Music play)
  
 # Not Working
 
 - DRM in Safari/Apple TV+ (Chrome browser will do)
 - Fingerprint sensor
+- Screen auto-rotation
 - Wake via built-in trackpad/keyboard
 
 # macOS
@@ -150,7 +155,7 @@ macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also
  
   - macOS Big Sur ~ Ventura
 
-    - Works without making any changes to posted EFI.
+    - Works without making any changes to the posted EFI.
 
   - macOS Sonoma 14.4+
 
@@ -166,7 +171,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
   ADD:
 
      - SSDT-AWAC.aml     (Disables AWAC clock and HPET; enables RTC to fix system clock)
-     - SSDT-ALS0.aml     (Ambient Light sensor fix; works with SMCLightSensor kext; "Slightly dim the display on battery" feature becomes functional)
+     - SSDT-ALSD.aml     (Ambient Light sensor fix; works with SMCLightSensor kext; "Slightly dim the display on battery" feature becomes functional)
      - SSDT-Bridge.aml   (Injects missing IOReg names; cosmetic)
      - SSDT-DMAR.aml     (Modified DMAR table to prevent issues when enabling AppleVTD)
      - SSDT-EC-USBX.aml  (Fake embedded controller with USB power properties)
@@ -174,7 +179,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
      - SSDT-LPCB.aml     (Injects fake devices, ARTC, DMAC, FWHD, and PMCR; cosmetic)
      - SSDT-MCHC.aml     (Injects fake MCHC device)
      - SSDT-PLUG.aml     (Injects plugin type 1 to load XCPM for CPU PMGMT; No longer required beginning with Monterey 12.3)
-     - SSDT-PNLF.aml     (Fixes backlight control -> brightness control; sleep with lid closed while AC adapter is plugged in)
+     - SSDT-PNLF.aml     (Fixes backlight control -> brightness control)
      - SSDT-USBP.aml     (ACPI USB Port Mapping Table; correctly define USB connector type for each USB ports and disable unused ports at ACPI level using GUPC and TUPC method)
   
    Delete:
@@ -191,7 +196,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
       | :---: | :---: | :---: |
       |  AAPL,ig-platform-id | <00009B3E>   |   |
       |  device-id | <9B3E0000>	| |
-      |  enable-backlight-registers-fix | <01000000> | Required to prevent Blackscreen |
+      |  enable-backlight-registers-fix | <01000000> | Required to prevent black screen |
       |  framebuffer-stolenmem | <00003001> | Remove this property if DVMT is set to 64MB (Modified in Grub shell) |
       |  framebuffer-patch-enable | <01000000> | Enables framebuffer patch 	|
       |  framebuffer-con0-enable    | <01000000> | 	|
@@ -199,11 +204,11 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
       |  framebuffer-con1-enable    | <01000000> | 	|
       |  framebuffer-con1-alldata   | <01010900 00080000 87010000> | BusID 1; Pipe 9; HDMI 0008; Flags 0187 |
       |  framebuffer-con2-enable    | <01000000> | 	|
-      |  framebuffer-con2-alldata   | <01060A00 00040000 87010000> | BusID 6; Pipe 10; DP 0004; Flags 0187 |       
-      |  enable-backlight-smoother | <01000000> 	| Brightness control smoothing	|
+      |  framebuffer-con2-alldata   | <02060A00 00040000 87010000> | BusID 6; Pipe 10; DP 0004; Flags 0187 |       
+      |  enable-backlight-smoother | <01000000> 	| Enable brightness control smoothing	|
       |  backlight-smoother-steps | <19000000> 	| |
       |  backlight-smoother-interval | <05000000> 	| |
-      |  backlight-smoother-lowerbound |<BC020000| Sets the built-in screen's minimum brightness level, preventing screen from going completely dark at its lowest |
+      |  backlight-smoother-lowerbound | <BC020000 | Sets the built-in screen's minimum brightness level, preventing screen from going completely dark at its lowest |
       |  rps-control | <01000000> 	| Improve iGPU performance |
       |  igfxfw | <02000000> 	| Forces loading Apple GuC Firmware; either use rps-control or igfxfw |
       |  force-online | <01000000> 	| Use this property to workaround coldplug not working on HDMI Port |
@@ -217,7 +222,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
   Add:
 
      - VirtualSMC and its plugins
-     - SMCBatteryManager (Required for correct battery status/No battery patching needed)
+     - SMCBatteryManager (Required for correct battery status/No additional battery patching needed; all are 8-bit)
      - SMCLightsensor (Ambient Light Sensor; works with SSDT-ALS0.aml)
      - SMCDellSensors (Needed for Dell CPU fan monitoring)
      - Lilu/AppleALC/WhateverGreen 
@@ -230,7 +235,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
 
   Patch:
 
-     - AppleRTC patch to disable RTC alarm wakes.
+     - AppleRTC patch to disable RTC alarm wake scheduling.
 
   Quirks:
   
@@ -263,7 +268,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
 
 # Misc
 
-**Troubleshooting** (Hackintoshing)
+**Troubleshooting** (Hackintoshing & Refining)
 
   Display 
 
@@ -273,24 +278,32 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
   -  HDMI port coldplug not working -> Workaround is to inject force-online property. It will still take around 10 sec to come on with couple of flickers.
   -  NO 4K resolution via external monitor -> Set DVMT Pre-allocated to 64MB using modGrub as there is no option for it in BIOS. (Make sure to remove framebuffer-stolenmem property)
   -  Brightness control keymapping (F6/F7) -> Add scan code 40=65 and 41=66 in VoodooPS2Keyboard.kext-> info.plist -> Custom Profile -> Default -> Custom PS2 Map. There are alternative ways to remap Fn+F6/F7 key such as [Brightnesskeys.kext](https://github.com/acidanthera/BrightnessKeys) or [SSDT-BRT6.aml](https://osxlatitude.com/forums/topic/15661-acpi-patch-for-brightness-keys-on-dell-laptops/) which require patching _OSI, OSID and BRT6. For me, F6 and F7 will do.
-<<<<<<< HEAD
-  
-=======
   -  Auto-rotation feature does not work. To manually rotate the screen, press and hold option/alt key(Ventura) and go to Display setting in System Settings for rotation option to show up in display settings. Alternatively, use [displayplacer](https://github.com/jakehilborn/displayplacer). One can create multiple bash scripts for each screen resolution and simply change resolution with a click or a tap.
 
       - Do note that when screen is rotated, scaling does not work. It will only work in default resolution.  Rotating screen requires first setting the resolution to default then rotate; otherwise, black screen. Doing this from the System Settings is time consuming and inconvenient. This is where displayplacer tool comes in handy to makes it quite convenient and even more so when in tablet mode.
->>>>>>> c31f29d (Update README.md)
 
   Audio
 
   - ALC layout-id 28 or 77 works. Some other(incompatible) layout-ids can lead to kernel_task causing high CPU usage.
   - Unfortunately, the headphone jack on this laptop requires [AlcPlugFix](https://github.com/black-dragon74/ALCPlugFix-Swift) to be functional. (alc-verbs <01000000>, Node ID 0x19, Param 20, temporary disable SIP)
-  - Boot-Chime not working in OpenCore boot menu -> Looking at the debug log, it's similar to issue described [here](https://github.com/acidanthera/bugtracker/issues/963). The solution is to upsample audio file to 48kHz. However, I usually don't like to use Boot-Chime as AudioDXE.efi driver causes delay when posting. 
+  - Boot-Chime not working in OpenCore boot menu -> Looking at the debug log, it's similar to issue described [here](https://github.com/acidanthera/bugtracker/issues/963). The solution is to upsample audio file to 48kHz. However, I usually don't like to use Boot-Chime as AudioDXE.efi driver causes a delay when the system posts and breaks audio in Windows (The fix for Windows can be found in OpenCore's Configuration.pdf). 
 
   CPU Powermanagement
 
   - Inject CPUFriend.kext with configured CPUFriendDataProvider.kext.
-  - [VoltageShift.kext](https://github.com/sicreative/VoltageShift) to disable Intel Turbo Boost and keep the fan noise down.
+  - [VoltageShift.kext](https://github.com/sicreative/VoltageShift) to disable Intel Turbo Boost, undervolt, and set power limit to keep the fan noise down.
+    <br>
+    
+    My Voltageshift settings as reference
+    ```md
+    |        [CPU][-110mv]
+    |  [CPU Cache][-110mv]
+    |        [GPU][-70mv]
+    | [TurboBoost][OFF]
+    |        [PL1][10W]
+    |        [PL2][10W]
+    ```
+ - On stock power settings during the intensive work, the processor almost always instantly thermal throttles and settles around 2.7 GHz average clock speed, 15W power consumption, and 80c temperature in longer period of use.    
     
   Sleep/USB
 
@@ -319,10 +332,10 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
 
       - Misc -> Boot -> Hibernatemode -> NVRAM
       - Misc -> Boot -> HibernateSkipsPicker -> Yes
-      - Disable AppleRTC kernel patch if enabled (patch to disable scheduled RTC alarm wake)
+      - Do not apply AppleRTC kernel patch if applied (patch to disable RTC wake scheduling)
       - Inject [HibernationFixup.kext](https://github.com/acidanthera/HibernationFixup)
       - Add boot-arg -> hbfx-ahbm=5 (Need this flag with value of at least 1 to put system in standby mode; refer to its [manual](https://github.com/acidanthera/HibernationFixup) for various configuration)
-      - Set standbydelay time that suits your need in terminal (This sets the RTC alarm wake schedule). The system will darkwake from normal sleep as set by standbydelay argument then decides whether to transition to standby mode. If transions to standby, it saves current session to disk in var/vm/sleepimage and turns off some of the hardware systems to save power)
+      - Set standbydelay time that suits your need in terminal (This sets the RTC alarm wake scheduling). The system will darkwake from normal sleep as set by standbydelay argument then decides whether to transition to standby mode. If transions to standby, it saves current session to disk in var/vm/sleepimage and turns off some of the hardware systems to save power)
 
             Sudo pmset -a standbydelay 7200    (In seconds; This will put the system in standby mode after 2 hours of normal sleep)
 
@@ -376,12 +389,25 @@ CPU Fan
 
  - This laptop seems to have a fan curve mode where it won't start spinning until the temp reaches above 70c and stops spinning once the temp cools down to around 50c (Optimized setting in Thermal Management).
  - Has a single pipe heatsink -> Swapped with dual pipe heatsink from Latitude 5310 model(Had to bend one of the pipes a little bit). If I had known a difference it made, I wouldn't have bothered swapping. I think laptop cooling pad will probably do a better job.
- - The CPU fan can be controlled with MacsFanControl app which is very limited in terms of what you can control. The fan RPM can be adjusted from 3400 ~ 6000RPM at constant. Do note that this will only work if Fan Control Override is enabled via BIOS mod. This feature is not accessible from the BIOS menu.
+ - The CPU fan can be controlled with MacsFanControl app which is very limited in terms of what you can control. The fan RPM can be adjusted from 3400 ~ 7000RPM at constant. Do note that this will only work if Fan Control Override is enabled via BIOS mod. This feature is not accessible from the BIOS menu.
    
 Wi-Fi/Bluetooth
 
  - Comes with Intel Dual Band Wireless AC 9560 -> Swapped with BCM94360NG module to enjoy Airplay/Airdrop/continuity features. MHF4 extension cable was required as one(main) of the two antenna cables was too short to reach the main antenna port on BCM94360 module.
- 
+
+ - BCM94360NG speed issue with macOS
+
+   You will find discussion about this problem from Acidenthera bugtracker #[1532](https://github.com/acidanthera/bugtracker/issues/1532) with possible workaround
+   
+   On Windows, internet speed works fine as it should with link speed up to 866 Mbps. However on macOS, speed becomes an issue. You'll notice that Tx rate is maxed at 434 Mbps with limited spatial stream to 1 (NSS=1) on cold boot. To gain its maximum capable speed, it seems that only workaround for now is to warm boot from Windows to macOS while having Broadcom Network Adapter driver version [7.35.295.2](https://www.catalog.update.microsoft.com/Search.aspx?q=Broadcom%20802.11n%20Network%20Adapter) (7/19/2015) installed. Note that this will only work with this specific version of drive.
+
+Battery 
+
+ - N2K62 LCL (60 WHr, Long Cycle Life /1000 charge cycle) pack. At the time of testing, battery max capacity at 71.6% due to battery degradation.
+ - In BIOS, battery is configured to be start charging when below 50% and stop charging when at 83%
+ - Based on the testing with above setup and brightness level around 80%, the battery would last about 3 hrs when watching the 1080P 60FPS Youtube video. The CPU total package power consumption reporting during the video playback arounds 2.5W ~ 3.5W.
+ - Disabling touchscreen and reducing brightness level may help with preserving battery life. 
+   
 
 WWAN slot
 
@@ -402,9 +428,3 @@ WWAN slot
 
 
 Big thanks to Hackintosh community and those who contributed to make hackintosh possible from the beginning to the end!
-
-
-
-
-
-

@@ -273,7 +273,13 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
   -  HDMI port coldplug not working -> Workaround is to inject force-online property. It will still take around 10 sec to come on with couple of flickers.
   -  NO 4K resolution via external monitor -> Set DVMT Pre-allocated to 64MB using modGrub as there is no option for it in BIOS. (Make sure to remove framebuffer-stolenmem property)
   -  Brightness control keymapping (F6/F7) -> Add scan code 40=65 and 41=66 in VoodooPS2Keyboard.kext-> info.plist -> Custom Profile -> Default -> Custom PS2 Map. There are alternative ways to remap Fn+F6/F7 key such as [Brightnesskeys.kext](https://github.com/acidanthera/BrightnessKeys) or [SSDT-BRT6.aml](https://osxlatitude.com/forums/topic/15661-acpi-patch-for-brightness-keys-on-dell-laptops/) which require patching _OSI, OSID and BRT6. For me, F6 and F7 will do.
+<<<<<<< HEAD
   
+=======
+  -  Auto-rotation feature does not work. To manually rotate the screen, press and hold option/alt key(Ventura) and go to Display setting in System Settings for rotation option to show up in display settings. Alternatively, use [displayplacer](https://github.com/jakehilborn/displayplacer). One can create multiple bash scripts for each screen resolution and simply change resolution with a click or a tap.
+
+      - Do note that when screen is rotated, scaling does not work. It will only work in default resolution.  Rotating screen requires first setting the resolution to default then rotate; otherwise, black screen. Doing this from the System Settings is time consuming and inconvenient. This is where displayplacer tool comes in handy to makes it quite convenient and even more so when in tablet mode.
+>>>>>>> c31f29d (Update README.md)
 
   Audio
 

@@ -62,9 +62,9 @@ Intel Turbo boost -> Disabled for Windows 10 to reduce fan noise, sacrificing pe
 
 # BIOS Mod
 
-These modifications in BIOS are not required to boot macOS at all and can be ignored, but is done to enable features that are otherwise would not be available. 
+The modification of these hidden BIOS settings are not required to boot macOS at all and can be ignored, but is done to enable features that are otherwise would not be available. 
 
-To change below BIOS settings, [ModGrub](https://github.com/datasone/grub-mod-setup_var/releases) is required
+To change below hidden BIOS settings, [ModGrub](https://github.com/datasone/grub-mod-setup_var/releases) is required
 
 For Dell BIOS extraction to find offset, please refer to Dreamwhite's [guide](https://github.com/dreamwhite/bios-extraction-guide).
 
@@ -175,7 +175,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
      - SSDT-Bridge.aml   (Injects missing IOReg names; cosmetic)
      - SSDT-DMAR.aml     (Modified DMAR table to prevent issues when enabling AppleVTD)
      - SSDT-EC-USBX.aml  (Fake embedded controller with USB power properties)
-     - SSDT-GPI0.aml     (Ensures VoodooGPI0 is attached to GPI0 for Trackpad and touchscreen to work)
+     - SSDT-GPI0.aml     (Ensures VoodooGPI0 is attached to GPI0 for trackpad and touchscreen to work)
      - SSDT-LPCB.aml     (Injects fake devices, ARTC, DMAC, FWHD, and PMCR; cosmetic)
      - SSDT-MCHC.aml     (Injects fake MCHC device)
      - SSDT-PLUG.aml     (Injects plugin type 1 to load XCPM for CPU PMGMT; No longer required beginning with Monterey 12.3)
@@ -211,7 +211,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
       |  backlight-smoother-lowerbound | <BC020000 | Sets the built-in screen's minimum brightness level, preventing screen from going completely dark at its lowest |
       |  rps-control | <01000000> 	| Improve iGPU performance |
       |  igfxfw | <02000000> 	| Forces loading Apple GuC Firmware; either use rps-control or igfxfw |
-      |  force-online | <01000000> 	| Use this property to workaround coldplug not working on HDMI Port |
+      |  force-online | <01000000> 	| Use this property to workaround HDMI Port not working with coldplug or after sleep|
 
 
       Please refer to [WhateverGreen Manual](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md) for more detailed explanation.
@@ -227,7 +227,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
      - SMCDellSensors (Needed for Dell CPU fan monitoring)
      - Lilu/AppleALC/WhateverGreen 
      - [CPUFriend](https://github.com/acidanthera/CPUFriend)/[CPUFriendDataProvider](https://github.com/corpnewt/CPUFriendFriend) (Configure CPU powermanagement)
-     - [VoltageShift](https://github.com/sicreative/VoltageShift) (To disable Turbo Boost/Undervolt/Power Limit; the kext itself won't do anything unless settings are configured at OS level; Undervolting requires unlocking Overclock Lock in BIOS mod)
+     - [VoltageShift](https://github.com/sicreative/VoltageShift) (To disable Intel Turbo Boost, undervolt, and set Power Limit(PL1,PL2); the kext itself won't do anything unless the settings are configured at OS level; Undervolting requires unlocking Overclock Lock in BIOS mod)
      - [RealtekCardReader](https://github.com/0xFireWolf/RealtekCardReader)/RealtekCardReaderFriend (For microSD card reader)
      - NVMeFix
      - VoodooPS2Controller/VoodooPS2Keyboard (For Keyboard)
@@ -272,11 +272,11 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
 
   Display 
 
-  -  Black screen on built-in display -> Inject enable-backlight-registers-fix was required to resolve this.
+  -  Black screen on built-in display -> Injecting enable-backlight-registers-fix was required to resolve this.
   -  Black screen on built-in display when rotating or connecting/disconnecting to/from external display -> This was due to using custom resolution to enable HIDPI resolution. Workaround is to set display resolution back to its default in prior and scale the resolution afterwards.
   -  Black screen on the HDMI port connected display -> bus ID of the HDMI port needs to be patched to 0x01.
   -  HDMI port coldplug not working -> Workaround is to inject force-online property. It will still take around 10 sec to come on with couple of flickers.
-  -  NO 4K resolution via external monitor -> Set DVMT Pre-allocated to 64MB using modGrub as there is no option for it in BIOS. (Make sure to remove framebuffer-stolenmem property)
+  -  NO 4K resolution via external monitor -> Set DVMT Pre-allocated to 64MB using modGrub as this option is hidden in BIOS. (Make sure to remove framebuffer-stolenmem property)
   -  Brightness control keymapping (F6/F7) -> Add scan code 40=65 and 41=66 in VoodooPS2Keyboard.kext-> info.plist -> Custom Profile -> Default -> Custom PS2 Map. There are alternative ways to remap Fn+F6/F7 key such as [Brightnesskeys.kext](https://github.com/acidanthera/BrightnessKeys) or [SSDT-BRT6.aml](https://osxlatitude.com/forums/topic/15661-acpi-patch-for-brightness-keys-on-dell-laptops/) which require patching _OSI, OSID and BRT6. For me, F6 and F7 will do.
   -  Auto-rotation feature does not work. To manually rotate the screen, press and hold option/alt key(Ventura) and go to Display setting in System Settings for rotation option to show up in display settings. Alternatively, use [displayplacer](https://github.com/jakehilborn/displayplacer). One can create multiple bash scripts for each screen resolution and simply change resolution with a click or a tap.
 

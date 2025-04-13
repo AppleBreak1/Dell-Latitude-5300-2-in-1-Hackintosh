@@ -60,11 +60,11 @@ Intel Turbo boost -> Disabled for Windows 10 to reduce fan noise, sacrificing pe
 
   ** Note that in order to boot macOS, only change required to make from its default setting is "Secure Boot Enable" **
 
-# BIOS Mod
+# UEFI Variable Mod
 
 The modification of these hidden BIOS settings are not required to boot macOS at all and can be ignored, but is done to enable features that are otherwise would not be available. 
 
-To change below hidden BIOS settings, [ModGrub](https://github.com/datasone/grub-mod-setup_var/releases) is required
+To change below hidden BIOS settings, [ModGrubShell](https://github.com/datasone/grub-mod-setup_var/releases) is required
 
 For Dell BIOS extraction to find offset, please refer to Dreamwhite's [guide](https://github.com/dreamwhite/bios-extraction-guide).
 
@@ -79,7 +79,7 @@ BIOS Version: 1.32.0
 
 - Set DVMT Pre-allocated to 64MB -> (offset 0xA10)
 
-        setup_var 0xA10 0x2     (This will set DVMT to 64MB)
+        setup_var 0xA10 0x2     (This will pre-allocate 64MB to DVMT)
         setup_var 0xA10 0x1     (Back to default)
   
 - Enable USB Wake Support -> (offset 0x149A)
@@ -95,8 +95,8 @@ BIOS Version: 1.32.0
 Note: 
 
   - [Why disable CFG Lock?](https://dortania.github.io/OpenCore-Post-Install/misc/msr-lock.html#what-is-cfg-lock)
-  - Once the DVMT is set to 64MB, make sure to remove framebuffer-stolenmem property from the config.plist as this will ensure 4K60FPS resolution option is enabled via (USB-C/DP-Alt-Mode). The HDMI port on this laptop will only support up to 4K30FPS with capable external monitor.
-  - USB Wake support does not show up as an option in BIOS and there is only a checkbox option for "Wake on Dell USB-C dock". At [r/Dell](https://www.reddit.com/r/Dell/comments/mgipwl/dell_can_you_please_add_proper_enable_usb_wake/), there are some posts complaining about this issue. Nonetheless, the option is there, hidden. If this option is disabled as in default, the BIOS will remove power from all of the USB ports. This causes a problem with Bluetooth, connected USB drives, and more.
+  - Once the DVMT Pre-Allocated is set to 64MB, make sure to remove framebuffer-stolenmem property from the config.plist as this will ensure 4K60FPS resolution option is enabled via (USB-C/DP-Alt-Mode). The HDMI port on this laptop will only support up to 4K30FPS with capable external monitor.
+  - USB Wake support does not show up as an option in BIOS menu and there is only a checkbox option for "Wake on Dell USB-C dock". At [r/Dell](https://www.reddit.com/r/Dell/comments/mgipwl/dell_can_you_please_add_proper_enable_usb_wake/), there are some posts complaining about this issue. Nonetheless, the option is there, hidden. If this option is disabled as in default, the BIOS will remove power from all of the USB ports. This causes a problem with Bluetooth, connected USB drives, and more.
     
     Upon waking, it will take a while for Bluetooth to reconnect and with lid open wake, notice blutoothd process taking high CPU usage around 200% that the Bluetooth has to be toggled off/on to stop the high CPU usage. As for the connected external USB drives, of course there is going to be a "Disk not ejected properly" pop-up every time.
 
@@ -276,7 +276,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
   -  Black screen on built-in display when rotating or connecting/disconnecting to/from external display -> This was due to using custom resolution to enable HIDPI resolution. Workaround is to set display resolution back to its default in prior and scale the resolution afterwards.
   -  Black screen on the HDMI port connected display -> bus ID of the HDMI port needs to be patched to 0x01.
   -  HDMI port coldplug not working -> Workaround is to inject force-online property. It will still take around 10 sec to come on with couple of flickers.
-  -  NO 4K resolution via external monitor -> Set DVMT Pre-allocated to 64MB using modGrub as this option is hidden in BIOS. (Make sure to remove framebuffer-stolenmem property)
+  -  NO 4K resolution via external monitor -> Set DVMT Pre-allocated to 64MB using modGrubShell as this option is hidden in BIOS. (Make sure to remove framebuffer-stolenmem property)
   -  Brightness control keymapping (F6/F7) -> Add scan code 40=65 and 41=66 in VoodooPS2Keyboard.kext-> info.plist -> Custom Profile -> Default -> Custom PS2 Map. There are alternative ways to remap Fn+F6/F7 key such as [Brightnesskeys.kext](https://github.com/acidanthera/BrightnessKeys) or [SSDT-BRT6.aml](https://osxlatitude.com/forums/topic/15661-acpi-patch-for-brightness-keys-on-dell-laptops/) which require patching _OSI, OSID and BRT6. For me, F6 and F7 will do.
   -  Auto-rotation feature does not work. To manually rotate the screen, press and hold option/alt key(Ventura) and go to Display setting in System Settings for rotation option to show up in display settings. Alternatively, use [displayplacer](https://github.com/jakehilborn/displayplacer). One can create multiple bash scripts for each screen resolution and simply change resolution with a click or a tap.
 
@@ -308,7 +308,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
   Sleep/USB
 
   - Looking at the power event log, the system has been darkwaking every 1~2 hours due to all kinds of reasons -> The solution is to pmset to Hibernatemode 0, proximitywake 0, tcpkeepalive 0 and apply AppleRTC kernel patch.
-  - The system will only wake via power button or by opening the lid, but not via external USB keyboard/mouse -> To wake via USB, USB Wake Support(only supported when AC adapter is plugged) option needs to be enabled and is to be done in alternative way as this option is not available in BIOS mode.
+  - The system will only wake via power button or by opening the lid, but not via external USB keyboard/mouse -> To wake via USB, USB Wake Support(only supported when AC adapter is plugged) option needs to be enabled and is to be done in alternative way as this option is not available in BIOS menu.
   - "Disk not ejected properly" pop-up notification with USB drive -> Enable USB Wake Support.
   - Bluetooth takes a while to reconnect upon waking -> Enable USB Wake Support.
   - bluetoothd process with high CPU usage on lid open wake -> Enable USB Wake Support.

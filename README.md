@@ -6,25 +6,25 @@
 <img width="200" alt="Screenshot 2024-11-17 at 5 11 19 PM" src="https://github.com/user-attachments/assets/0860e73d-157e-416c-bbb5-626b3d572380">
 
 # Hardware Specification
+```md
+[CPU][Intel® Core™ i7-8665U]
 
-CPU : Intel® Core™ i7-8665U
+[GPU][Intel® UHD Graphics 620]
 
-GPU: Intel® UHD Graphics 620
+[RAM][Micron 16GB 2666Mhz] x 2 (32GB)
 
-RAM: Micron 16GB 2666Mhz x 2 (32GB)
+[Display][13.3 FHD 1920 x 1080 IPS] (Chi Mei: CMN1382)
 
-Display: 13.3 FHD 1920 x 1080 IPS (Chi Mei: CMN1382)
+[Touchscreen][WCOM48E2] (Wacom)
 
-Touchscreen: WCOM48E2 (Wacom) 
+[Wi-Fi/BT Card][BCM94360NG NGFF M.2] (Swapped from Intel® Dual Band Wireless AC 9560; extension cable required)
 
-Wi-Fi/BT Card: BCM94360NG NGFF M.2 (Swapped from Intel® Dual Band Wireless AC 9560; extension cable required)
+[SSD][SK Hynix PC 401 512GB] (Both macOS and Windows on the same drive)
 
-SSD: SK Hynix PC 401 512GB (Both macOS and Windows on the same drive)
+[Audio][ALC295/ALC3254] (Layout-ID 77, Headphone jack requires ALCPlugFix to be functional)
 
-Audio: ALC295/ALC3254 (Layout-ID 77, Headphone jack requires ALCPlugFix to be functional)
-
-Pen: Dell Premium Active Pen PN579X
-
+[Pen][Dell Premium Active Pen PN579X]
+```
 Left side ports: 
 
   - USB-C (USB 3.1 Gen 2 10Gbps; DisplayPort (4K60FPS); Thunderbolt port comes as an option)
@@ -162,7 +162,7 @@ macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also
     - To install or update to Sonoma 14.4+, SecureBootModel needs to disabled.
     - For macOS Sonoma+, Broadcom Wi-Fi has to depend on OLCP patch to be functional.
 
-# OpenCore Config.plist
+# OpenCore Config
 
 Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/coffee-lake.html) section of Dortania guide.
 

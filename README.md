@@ -160,6 +160,7 @@ macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also
   - macOS Sonoma 14.4+
 
     - To install or update to Sonoma 14.4+, SecureBootModel needs to disabled.
+    - To fix black screen on internal display for Sonoma+, adding enable-backlight-registers-alternative-fix property is necessary
     - For macOS Sonoma+, Broadcom Wi-Fi has to depend on OLCP patch to be functional.
 
 # OpenCore Config
@@ -197,6 +198,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
       |  AAPL,ig-platform-id | <00009B3E>   |   |
       |  device-id | <9B3E0000>	| |
       |  enable-backlight-registers-fix | <01000000> | Required to prevent black screen |
+      |  enable-backlight-registers-alternative-fix | <01000000> | Required to prevent black screen (Sonoma+) |
       |  framebuffer-stolenmem | <00003001> | Remove this property if DVMT is set to 64MB (Modified in Grub shell) |
       |  framebuffer-patch-enable | <01000000> | Enables framebuffer patch 	|
       |  framebuffer-con0-enable    | <01000000> | 	|
@@ -273,6 +275,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
   Display 
 
   -  Black screen on built-in display -> Injecting enable-backlight-registers-fix was required to resolve this.
+  -  [3-minute Black screen](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-3-minute-black-screen-issue-on-kblcfl-platforms-running-macos-134-or-later) on built-in display for Sonoma+ -> Injecting enable-backlight-registers-alternitive-fix was required to resolve this.
   -  Black screen on built-in display when rotating or connecting/disconnecting to/from external display -> This was due to using custom resolution to enable HIDPI resolution. Workaround is to set display resolution back to its default in prior and scale the resolution afterwards.
   -  Black screen on the HDMI port connected display -> bus ID of the HDMI port needs to be patched to 0x01.
   -  HDMI port coldplug not working -> Workaround is to inject force-online property. It will still take around 10 sec to come on with couple of flickers.
@@ -316,6 +319,13 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
     What if you are on battery power? Consider using [Bluesnooze](https://github.com/odlp/bluesnooze), [Blueutil](https://github.com/toy/blueutil) or manually turnoff Bluetooth.
 
    [Standby](https://support.apple.com/en-us/101363) / Hibernatemode (Works)
+
+Num Lock (Enable)
+   
+   - BIOS -> Keypad (Embedded) -> By Numlock
+   - BIOS -> Numlock Enable -> Enable Numlock
+   - Compile and inject -> [SSDT-NumLockSupport.dsl](https://github.com/acidanthera/VoodooPS2/blob/master/Docs/ACPI/SSDT-NumLockSupport.dsl)
+   - Press fn+insert to enable numlock and use 7,8,9,0(/),U(4),I(5),O(6),P(*),J(1),K(2),L(3),;(-),M(0),>(.),/(+) keys as number pad.
 
    From pmset Man page
    

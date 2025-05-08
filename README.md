@@ -318,14 +318,14 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
 
     What if you are on battery power? Consider using [Bluesnooze](https://github.com/odlp/bluesnooze), [Blueutil](https://github.com/toy/blueutil) or manually turnoff Bluetooth.
 
-   [Standby](https://support.apple.com/en-us/101363) / Hibernatemode (Works)
-
 Num Lock (Enable)
    
    - BIOS -> Keypad (Embedded) -> By Numlock
    - BIOS -> Numlock Enable -> Enable Numlock
    - Compile and inject -> [SSDT-NumLockSupport.dsl](https://github.com/acidanthera/VoodooPS2/blob/master/Docs/ACPI/SSDT-NumLockSupport.dsl)
    - Press fn+insert to enable numlock and use 7,8,9,0(/),U(4),I(5),O(6),P(*),J(1),K(2),L(3),;(-),M(0),>(.),/(+) keys as number pad.
+
+[Standby](https://support.apple.com/en-us/101363) / Hibernatemode (Works)
 
    From pmset Man page
    

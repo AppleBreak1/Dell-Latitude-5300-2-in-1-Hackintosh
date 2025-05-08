@@ -159,7 +159,7 @@ macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also
 
   - macOS Sonoma 14.4+
 
-    - To install or update to Sonoma 14.4+, SecureBootModel needs to disabled.
+    - To install or update to Sonoma 14.4+, SecureBootModel needs to be disabled.
     - To fix black screen on internal display for Sonoma+, adding enable-backlight-registers-alternative-fix property is necessary
     - For macOS Sonoma+, Broadcom Wi-Fi has to depend on OLCP patch to be functional.
 

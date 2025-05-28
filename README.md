@@ -27,7 +27,7 @@
 ```
 Left side ports: 
 
-  - USB-C (USB 3.1 Gen 2 10Gbps; DisplayPort (4K60FPS); Thunderbolt port comes as an option)
+  - USB-C (USB 3.1 Gen 2 10Gbps; DisplayPort (4K60FPS); Thunderbolt port may comes as an option)
   - HDMI 1.4b (Supports up to 4K30FPS)
   - USB-A (USB 3.1 Gen 1 5Gbps)
   - Smart card reader
@@ -157,7 +157,7 @@ macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also
 
     - Works without making any changes to the posted EFI.
 
-  - macOS Sonoma 14.4+
+  - macOS Sonoma 14.4
 
     - To install or update to Sonoma 14.4+, SecureBootModel needs to be disabled.
     - To fix black screen on internal display for Sonoma+, Injecting [enable-backlight-registers-alternative-fix](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-3-minute-black-screen-issue-on-kblcfl-platforms-running-macos-134-or-later) property is necessary

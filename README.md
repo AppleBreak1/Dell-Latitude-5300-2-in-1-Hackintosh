@@ -27,7 +27,7 @@
 ```
 Left side ports: 
 
-  - USB-C (USB 3.1 Gen 2 10Gbps; DisplayPort (4K60FPS); Thunderbolt port may comes as an option)
+  - USB-C (USB 3.1 Gen 2 10Gbps; DisplayPort (4K60FPS); Thunderbolt port may come as an option)
   - HDMI 1.4b (Supports up to 4K30FPS)
   - USB-A (USB 3.1 Gen 1 5Gbps)
   - Smart card reader

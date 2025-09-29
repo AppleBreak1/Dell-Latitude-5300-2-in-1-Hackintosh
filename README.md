@@ -115,9 +115,9 @@ Note:
 
 - Trackpad/Touchscreen with gestures
 
-- Keyboard (Volume+/-/Mute with Fn+F1/F2/F3, brightness +/- with F6/F7, keyboard backlight with Fn+F5)
+- Keyboard (Volume+/-/Mute with Fn+F1/F2/F3, brightness +/- with Fn+F6/F7, keyboard backlight with Fn+F5)
 
-- Pen PN579X : Limited functionality but pen hovering and top barrel button (right click) works.
+- Pen PN579X: Limited functionality but pen hovering and top barrel button (right click) works.
 
 - Display: 4K60FPS resolution via USB-C(DP-Alt-Mode) port / 4K30FPS via HDMI1.4b port / Dim display on battery
 
@@ -173,8 +173,8 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
 
      - SSDT-AWAC.aml     (Disables AWAC clock and HPET; enables RTC to fix system clock)
      - SSDT-ALSD.aml     (Ambient Light sensor fix; works with SMCLightSensor kext; "Slightly dim the display on battery" feature becomes functional)
+     - SSDT-ACOS.aml     (SSDT patch to allow Dell keyboard function keys to work, such as brightness +/-; use with BrightnessKeys.kext)
      - SSDT-Bridge.aml   (Injects missing IOReg names; cosmetic)
-     - SSDT-DMAR.aml     (Modified DMAR table to prevent issues when enabling AppleVTD)
      - SSDT-EC-USBX.aml  (Fake embedded controller with USB power properties)
      - SSDT-GPI0.aml     (Ensures VoodooGPI0 is attached to GPI0 for trackpad and touchscreen to work)
      - SSDT-LPCB.aml     (Injects fake devices, ARTC, DMAC, FWHD, and PMCR; cosmetic)
@@ -185,8 +185,11 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
   
    Delete:
 
-    - Drop OEM DMAR Table 
     - Drop OEM USB Table
+
+- Quirks
+
+    - FadtEnableReset -> Yes (Required to fix power button to function correctly (i.e putting system to sleep/fully wake system from sleep; not darkwake)    
       
       
 - Device Properties
@@ -229,22 +232,22 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
      - SMCDellSensors (Needed for Dell CPU fan monitoring)
      - Lilu/AppleALC/WhateverGreen 
      - [CPUFriend](https://github.com/acidanthera/CPUFriend)/[CPUFriendDataProvider](https://github.com/corpnewt/CPUFriendFriend) (Configure CPU powermanagement)
-     - [VoltageShift](https://github.com/sicreative/VoltageShift) (To disable Intel Turbo Boost, undervolt, and set Power Limit(PL1,PL2); the kext itself won't do anything unless the settings are configured at OS level; Undervolting requires unlocking Overclock Lock in BIOS mod)
+     - [VoltageShift](https://github.com/sicreative/VoltageShift) (To disable Intel Turbo Boost, undervolt, and set Power Limit(PL1,PL2); the kext itself won't do anything unless the settings are configured at OS level; undervolting requires unlocking Overclock Lock in BIOS mod)
      - [RealtekCardReader](https://github.com/0xFireWolf/RealtekCardReader)/RealtekCardReaderFriend (For microSD card reader)
      - NVMeFix
      - VoodooPS2Controller/VoodooPS2Keyboard (For Keyboard)
      - [VoodooI2C](https://github.com/VoodooI2C/VoodooI2C)/VoodooInput/VoodooI2CServices/VoodooGPIO/VoodooI2CHID (For Trackpad/Touchscreen)
+     - [BrightnessKeys.kext](https://github.com/acidanthera/BrightnessKeys) (For Brightness keys to work; use with SSDT-ACOS.aml)
+     - [HibernationFixup.kext](https://github.com/acidanthera/HibernationFixup) (Required if using standby(S4) with hibernatemode 3)
 
   Patch:
 
-     - AppleRTC patch to disable RTC alarm wake scheduling.
+     - AppleRTC patch to disable RTC alarm wake scheduling. (Do not enable this quirk if using hibernatemode 3)
 
   Quirks:
   
      - AppleXcpmCfgLock -> Set to No if CFG Lock is disabled. Otherwise, enable this quirk.
      - CustomSMBIOSGuid -> If dual booting to other OSes other than macOS, set this to yes along with setting UpdateSMBIOSMode to "Custom" in PlatformInfo section.
-     - DisableIoMapper -> No (If enabling AppleVTD)
-     - DisableIoMapperMapping -> Yes (If enabling AppleVTD in Ventura+)
 
 - Misc
   
@@ -275,12 +278,11 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
   Display 
 
   -  Black screen on built-in display -> Injecting enable-backlight-registers-fix was required to resolve this.
-  -  [3-minute Black screen](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-3-minute-black-screen-issue-on-kblcfl-platforms-running-macos-134-or-later) on built-in display for Sonoma+ -> Injecting enable-backlight-registers-alternitive-fix was required to resolve this.
+  -  [3-minute Black screen](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-3-minute-black-screen-issue-on-kblcfl-platforms-running-macos-134-or-later) on built-in display for Sonoma+ -> Injecting enable-backlight-registers-alternative-fix was required to resolve this.
   -  Black screen on built-in display when rotating or connecting/disconnecting to/from external display -> This was due to using custom resolution to enable HIDPI resolution. Workaround is to set display resolution back to its default in prior and scale the resolution afterwards.
   -  Black screen on the HDMI port connected display -> bus ID of the HDMI port needs to be patched to 0x01.
   -  HDMI port coldplug not working -> Workaround is to inject force-online property. It will still take around 10 sec to come on with couple of flickers.
   -  NO 4K resolution via external monitor -> Set DVMT Pre-allocated to 64MB using modGrubShell as this option is hidden in BIOS. (Make sure to remove framebuffer-stolenmem property)
-  -  Brightness control keymapping (F6/F7) -> Add scan code 40=65 and 41=66 in VoodooPS2Keyboard.kext-> info.plist -> Custom Profile -> Default -> Custom PS2 Map. There are alternative ways to remap Fn+F6/F7 key such as [Brightnesskeys.kext](https://github.com/acidanthera/BrightnessKeys) or [SSDT-BRT6.aml](https://osxlatitude.com/forums/topic/15661-acpi-patch-for-brightness-keys-on-dell-laptops/) which require patching _OSI, OSID and BRT6. For me, F6 and F7 will do.
   -  Auto-rotation feature does not work. To manually rotate the screen, press and hold option/alt key(Ventura) and go to Display setting in System Settings for rotation option to show up in display settings. Alternatively, use [displayplacer](https://github.com/jakehilborn/displayplacer). One can create multiple bash scripts for each screen resolution and simply change resolution with a click or a tap.
 
       - Do note that when screen is rotated, scaling does not work. It will only work in default resolution.  Rotating screen requires first setting the resolution to default then rotate; otherwise, black screen. Doing this from the System Settings is time consuming and inconvenient. This is where displayplacer tool comes in handy to makes it quite convenient and even more so when in tablet mode.
@@ -338,14 +340,16 @@ Num Lock (Enable)
 
      - Completely disables hibernation
 
-   - Hibernatemode 3  (pmset standby to 1)
+   - Hibernatemode 3  
 
+      - pmset hibernatemode to 3
+      - pmset standby to 1
       - Misc -> Boot -> Hibernatemode -> NVRAM
       - Misc -> Boot -> HibernateSkipsPicker -> Yes
       - Do not apply AppleRTC kernel patch if applied (patch to disable RTC wake scheduling)
       - Inject [HibernationFixup.kext](https://github.com/acidanthera/HibernationFixup)
       - Add boot-arg -> hbfx-ahbm=5 (Need this flag with value of at least 1 to put system in standby mode; refer to its [manual](https://github.com/acidanthera/HibernationFixup) for various configuration)
-      - Set standbydelay time that suits your need in terminal (This sets the RTC alarm wake scheduling). The system will darkwake from normal sleep as set by standbydelay argument then decides whether to transition to standby mode. If transions to standby, it saves current session to disk in var/vm/sleepimage and turns off some of the hardware systems to save power)
+      - Set standbydelay time that suits your need in terminal (This sets the RTC alarm wake scheduling). The system will darkwake from normal sleep as set by standbydelay argument then decides whether to transition to standby mode. If transitions to standby, it saves current session to disk in var/vm/sleepimage and turns off some of the hardware systems to save power)
 
             Sudo pmset -a standbydelay 7200    (In seconds; This will put the system in standby mode after 2 hours of normal sleep)
 
@@ -371,6 +375,8 @@ Num Lock (Enable)
 
       Hibernatemode 25 will immediately put system to standby preserving battery life. 
      
+      - pmset hibernatemode to 25
+      - pmset standby to 1
       - Misc -> Boot -> Hibernatemode -> NVRAM
       - Misc -> Boot -> HibernateSkipsPicker -> Yes
     
@@ -391,7 +397,7 @@ Num Lock (Enable)
                   (The battery drain during 6 hours of standby is 0% )
 
 
-      - Note that when in standby mode, the system could only wake via powerbutton and it will continue from splash screen then straight into macOS if HibernateSkipsPicker is set to Yes
+      - Note that when in standby mode, the system could only wake via power button and it will continue from splash screen then straight into macOS if HibernateSkipsPicker is set to Yes
                
 **Hardware**
 
@@ -409,7 +415,7 @@ Wi-Fi/Bluetooth
 
    You will find discussion about this problem from Acidenthera bugtracker #[1532](https://github.com/acidanthera/bugtracker/issues/1532) with possible workaround
    
-   On Windows, internet speed works fine as it should with link speed up to 866 Mbps. However on macOS, speed becomes an issue. You'll notice that Tx rate is maxed at 434 Mbps with limited spatial stream to 1 (NSS=1) on cold boot. To gain its maximum capable speed, it seems that only workaround for now is to warm boot from Windows to macOS while having Broadcom Network Adapter driver version [7.35.295.2](https://www.catalog.update.microsoft.com/Search.aspx?q=Broadcom%20802.11n%20Network%20Adapter) (7/19/2015) installed. Note that this will only work with this specific version of drive.
+   On Windows, internet speed works fine as it should with link speed up to 866 Mbps. However, on macOS, speed becomes an issue. You'll notice that Tx rate is maxed at 434 Mbps with limited spatial stream to 1 (NSS=1) on cold boot. To gain its maximum capable speed, it seems that only workaround for now is to warm boot from Windows to macOS while having Broadcom Network Adapter driver version [7.35.295.2](https://www.catalog.update.microsoft.com/Search.aspx?q=Broadcom%20802.11n%20Network%20Adapter) (7/19/2015) installed. Note that this will only work with this specific version of drive.
 
 Battery 
 

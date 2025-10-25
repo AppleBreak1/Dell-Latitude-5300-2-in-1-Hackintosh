@@ -3,7 +3,7 @@
 
 <img width="600" src="https://github.com/user-attachments/assets/449ce9b6-2cf9-44c6-8945-351bef1eb913">
 
-<img width="200" alt="Screenshot 2024-11-17 at 5 11 19 PM" src="https://github.com/user-attachments/assets/0860e73d-157e-416c-bbb5-626b3d572380">
+<img width="210" height="361" alt="idle power consumption" src="https://github.com/user-attachments/assets/2321d61b-235d-4ebf-8956-55c18a205b79" />
 
 # Hardware Specification
 ```md
@@ -308,7 +308,9 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
     |        [PL1][10W]
     |        [PL2][10W]
     ```
- - On stock power settings during the intensive work, the processor almost always instantly thermal throttles and settles around 2.7 GHz average clock speed, 15W power consumption, and 80c temperature in longer period of use.    
+ - The processor eventually downclocks and settles around 2.7 GHz average clock speed, 15W power consumption, and 80c temperature in longer period of use.
+ 
+ - Power consumption can be further cut by disabling SD card reader. After disabling the device, the total cpu package power consumption at idle reduced by around 0.70W down to as low as 0.55W which is very similar to Windows side. (Disabling touchscreen, camera, and any other unused devices at BIOS level may help as well) 
     
   Sleep/USB
 
@@ -403,13 +405,13 @@ Num Lock (Enable)
 
 CPU Fan
 
- - This laptop seems to have a fan curve mode where it won't start spinning until the temp reaches above 70c and stops spinning once the temp cools down to around 50c (Optimized setting in Thermal Management).
+ - This laptop seems to have a fan curve mode where it won't start spinning until the CPU temp reaches above 70c and stops spinning once the temp cools down to around 60c (Optimized setting in Thermal Management). However, CPU fan can be triggered by temperature sensors of other components as well.
  - Has a single pipe heatsink -> Swapped with dual pipe heatsink from Latitude 5310 model(Had to bend one of the pipes a little bit). If I had known a difference it made, I wouldn't have bothered swapping. I think laptop cooling pad will probably do a better job.
  - The CPU fan can be controlled with MacsFanControl app which is very limited in terms of what you can control. The fan RPM can be adjusted from 3400 ~ 7000RPM at constant. Do note that this will only work if Fan Control Override is enabled via BIOS mod. This feature is not accessible from the BIOS menu.
    
 Wi-Fi/Bluetooth
 
- - Comes with Intel Dual Band Wireless AC 9560 -> Swapped with BCM94360NG module to enjoy Airplay/Airdrop/continuity features. MHF4 extension cable was required as one(main) of the two antenna cables was too short to reach the main antenna port on BCM94360 module.
+ - Comes with Intel Dual Band Wireless AC 9560 -> Swapped with BCM94360NG module to enjoy Airplay/Airdrop/continuity features. MHF4 extension cable was required as one(main) of the two antenna cables was a bit short to reach the main antenna port on BCM94360 module.
 
  - BCM94360NG speed issue with macOS
 

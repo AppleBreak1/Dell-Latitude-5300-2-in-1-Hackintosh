@@ -308,9 +308,33 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
     |        [PL1][10W]
     |        [PL2][10W]
     ```
- - The processor eventually downclocks and settles around 2.7 GHz average clock speed, 15W power consumption, and 80c temperature in longer period of use.
+ - On default settings, the processor eventually downclocks and settles around 2.7 GHz average clock speed, 15W power consumption, and 80c temperature in longer period of use.
+
+ - Setting turbo ratio limit rather than disabling turbo boost
+
+      - MSR for turbo ratio limit is 0x1ad
+
+      - Read the values from 0x1ad and convert the resulting binary number to hex number
+
+            ./voltageshift read 0x1ad
+
+      - i7-8665U(4cores) as an example after converting the binary result to hex gives 
+     
+            0x2a2a2f30 (48 for 4 active cores, 47 for 3 active cores, 42 for 2 cores, 42 for 1 active core)
+
+      - Replace the values and modify turbo ratio limit
+     
+                                                         // i7-8665U
+            ./voltageshift write 0x1ad 0x1e1e1e1e1e1e    // limit to 30 for all number of active cores
+            ./voltageshift write 0x1ad 0x242424242424    // limit to 36 for all number of active cores
+            ./voltageshift write 0x1ad 0x1e1e1e1e1e24    // limit to 30 for 2 to 4 active cores and limit to 36 for 1 active core
+  
+ - Power consumption can be further cut by disabling SD card reader. After disabling the device, the total cpu package power consumption at idle reduced by around 0.70W down to as low as 0.55W which is very similar to Windows side. (Disabling touchscreen, camera, and any other unused devices at BIOS level may help as well)
  
- - Power consumption can be further cut by disabling SD card reader. After disabling the device, the total cpu package power consumption at idle reduced by around 0.70W down to as low as 0.55W which is very similar to Windows side. (Disabling touchscreen, camera, and any other unused devices at BIOS level may help as well) 
+ - Powermetrics Report
+
+    <img width="801" height="214" alt="Powermetrics" src="https://github.com/user-attachments/assets/450ac87f-247f-4e60-9bf1-aae2d22676e3" />
+
     
   Sleep/USB
 

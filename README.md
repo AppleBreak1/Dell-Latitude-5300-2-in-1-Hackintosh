@@ -329,11 +329,11 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
             ./voltageshift write 0x1ad 0x242424242424    // limit to 36 for all number of active cores
             ./voltageshift write 0x1ad 0x1e1e1e1e1e24    // limit to 30 for 2 to 4 active cores and limit to 36 for 1 active core
   
- - Power consumption can be further cut by disabling SD card reader. After disabling the device, the total cpu package power consumption at idle reduced by around 0.70W down to as low as 0.55W which is very similar to Windows side. (Disabling touchscreen, camera, and any other unused devices at BIOS level may help as well)
+ - Power consumption can be further reduced by disabling SD card reader. When the microSD card reader is enabled, CPU package does not enter C-state lower than C3 at idle. In order to reach similar level of power consumption as Windows side where the CPU reaches C8 state at idle, SD card reader needs to be disabled. (Disabling touchscreen, camera, and any other unused devices at BIOS level may help as well)
  
  - Powermetrics Report
 
-    <img width="801" height="214" alt="Powermetrics" src="https://github.com/user-attachments/assets/450ac87f-247f-4e60-9bf1-aae2d22676e3" />
+   <img width="801" height="214" alt="Powermetrics" src="https://github.com/user-attachments/assets/ff246cec-a226-43ca-8214-af86209eedcc" />
 
     
   Sleep/USB

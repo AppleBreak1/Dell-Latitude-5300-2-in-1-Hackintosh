@@ -38,7 +38,66 @@ Right side ports
   - microSD card reader (RTS525A PCIe)
   - Headset / Microphone (Universal Jack)
   - micro-SIM card (Optional)
-  
+
+# Working
+
+- Restart/Shutdown
+
+- Sleep(Idle/Lid close/Manual)
+
+- Wake (Lid open/Power button/External USB or Bluetooth keyboard/mouse/trackpad when AC adapter is plugged in)
+
+- Clamshell mode
+
+- Trackpad/Touchscreen with gestures
+
+- Keyboard (Volume+/-/Mute with Fn+F1/F2/F3, brightness +/- with Fn+F6/F7, keyboard backlight with Fn+F5)
+
+- Pen PN579X: Limited functionality but pen hovering and top barrel button (right click) works.
+
+- Display: 4K60FPS resolution via USB-C(DP-Alt-Mode) port / 4K30FPS via HDMI1.4b port / Dim display on battery
+
+- Built-in Camera. (Though, much better image with using iPhone as webcam)
+
+- Audio: Built-in speaker; Headphone jack requires ALCPlugFix to get sound
+
+- Battery Status
+
+- iMessage / Facetime 
+
+- Airplay/Airdrop/Handoff/Continuity including iPhone as webcam (Requires natively supported Wi-Fi/BT card such as BCM94360NG)
+
+- AirplaytoMac/Sidecar/Universal Control (Requires natively supported Wi-Fi/BT card such as BCM94360NG)
+
+- Apple Music Lossless Audio ([unfairgva=4](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.Chart.md); by spoofing board ID to iMacPro1,1(iGPU-less), lossless audio works in Apple Music; however, do note that spoofing board-ID to iMacPro1,1 on iGPU only system may break iGPU encoding/decoding functions and seemingly have issues with rps-control patch or Apple GuC firmware as the iGPU clock frequency and the power consumption can get stuck at max. This behavior is triggered when attempting video playback while having Apple Music play)
+ 
+# Not Working
+
+- DRM in Safari/Apple TV+ (Chrome browser will do)
+- Fingerprint sensor
+- Screen auto-rotation
+- Wake via built-in trackpad/keyboard
+
+# macOS
+
+macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also be possible with some spoofing)
+
+  - macOS High Sierra - Catalina
+    
+    - SMBIOS -> MacBookPro15,2 (For High Sierra)
+    - Set SecureBootModel -> Disabled
+    - UEFI -> APFS -> MinDate and MinVersion -> -1
+    - IGPU may require some spoofing in macOS High Sierra. Refer to [WhateverGreen Manual](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md) for supported ig-platform-id
+ 
+  - macOS Big Sur ~ Ventura
+
+    - Works without making any changes to the posted EFI.
+
+  - macOS Sonoma
+
+    - To install or update to Sonoma 14.4+, SecureBootModel needs to be disabled.
+    - To fix black screen on internal display for Sonoma+, Injecting [enable-backlight-registers-alternative-fix](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-3-minute-black-screen-issue-on-kblcfl-platforms-running-macos-134-or-later) property is necessary
+    - For macOS Sonoma+, Broadcom Wi-Fi has to depend on [OCLP](https://github.com/dortania/OpenCore-Legacy-Patcher) patch to be functional.
 
 # BIOS Settings
 
@@ -102,67 +161,6 @@ Note:
 
     By enabling USB Wake Support, all of these issues can be resolved given that there are no other problems causing these issues. However, as the description in BIOS(Although, the option is missing, ironically, there the description for it -_-) the USB Wake is functional only when the AC Power adapter is connected prior to standby mode.
     
-
-# Working
-
-- Restart/Shutdown
-
-- Sleep(Idle/Lid close/Manual)
-
-- Wake (Lid open/Power button/External USB or Bluetooth keyboard/mouse/trackpad when AC adapter is plugged in)
-
-- Clamshell mode
-
-- Trackpad/Touchscreen with gestures
-
-- Keyboard (Volume+/-/Mute with Fn+F1/F2/F3, brightness +/- with Fn+F6/F7, keyboard backlight with Fn+F5)
-
-- Pen PN579X: Limited functionality but pen hovering and top barrel button (right click) works.
-
-- Display: 4K60FPS resolution via USB-C(DP-Alt-Mode) port / 4K30FPS via HDMI1.4b port / Dim display on battery
-
-- Built-in Camera. (Though, much better image with using iPhone as webcam)
-
-- Audio: Built-in speaker; Headphone jack requires ALCPlugFix to get sound
-
-- Battery Status
-
-- iMessage / Facetime 
-
-- Airplay/Airdrop/Handoff/Continuity including iPhone as webcam (Requires natively supported Wi-Fi/BT card such as BCM94360NG)
-
-- AirplaytoMac/Sidecar/Universal Control (Requires natively supported Wi-Fi/BT card such as BCM94360NG)
-
-- Apple Music Lossless Audio ([unfairgva=4](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.Chart.md); by spoofing board ID to iMacPro1,1(iGPU-less), lossless audio works in Apple Music; however, do note that spoofing board-ID to iMacPro1,1 on iGPU only system may break iGPU encoding/decoding functions and seemingly have issues with rps-control patch or Apple GuC firmware as the iGPU clock frequency and the power consumption can get stuck at max. This behavior is triggered when attempting video playback while having Apple Music play)
- 
-# Not Working
-
-- DRM in Safari/Apple TV+ (Chrome browser will do)
-- Fingerprint sensor
-- Screen auto-rotation
-- Wake via built-in trackpad/keyboard
-
-# macOS
-
-macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also be possible with some spoofing)
-
-  - macOS High Sierra - Catalina
-    
-    - SMBIOS -> MacBookPro15,2 (For High Sierra)
-    - Set SecureBootModel -> Disabled
-    - UEFI -> APFS -> MinDate and MinVersion -> -1
-    - IGPU may require some spoofing in macOS High Sierra. Refer to [WhateverGreen Manual](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md) for supported ig-platform-id
- 
-  - macOS Big Sur ~ Ventura
-
-    - Works without making any changes to the posted EFI.
-
-  - macOS Sonoma
-
-    - To install or update to Sonoma 14.4+, SecureBootModel needs to be disabled.
-    - To fix black screen on internal display for Sonoma+, Injecting [enable-backlight-registers-alternative-fix](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-3-minute-black-screen-issue-on-kblcfl-platforms-running-macos-134-or-later) property is necessary
-    - For macOS Sonoma+, Broadcom Wi-Fi has to depend on [OCLP](https://github.com/dortania/OpenCore-Legacy-Patcher) patch to be functional.
-
 # OpenCore Config
 
 Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/coffee-lake.html) section of Dortania guide.

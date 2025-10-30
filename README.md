@@ -433,13 +433,13 @@ CPU Fan
    
 Wi-Fi/Bluetooth
 
- - Comes with Intel Dual Band Wireless AC 9560 -> Swapped with BCM94360NG module to enjoy Airplay/Airdrop/continuity features. MHF4 extension cable was required as one(main) of the two antenna cables was a bit short to reach the main antenna port on BCM94360 module.
+ - Comes with Intel Dual Band Wireless AC 9560 -> Swapped with BCM94360NG module to enjoy Airplay/Airdrop/continuity features. MHF4 extension cable was required as one(main) of the two antenna cables was a bit short to reach the main antenna port on BCM94360 module. Altenatively, you may utilize extra IPX MHF4 antenna and place it somewhere inside the laptop (It is very compact however).
 
  - BCM94360NG speed issue with macOS
 
    You will find discussion about this problem from Acidenthera bugtracker #[1532](https://github.com/acidanthera/bugtracker/issues/1532) with possible workaround
    
-   On Windows, internet speed works fine as it should with link speed up to 866 Mbps. However, on macOS, speed becomes an issue. You'll notice that Tx rate is maxed at 434 Mbps with limited spatial stream to 1 (NSS=1) on cold boot. To gain its maximum capable speed, it seems that only workaround for now is to warm boot from Windows to macOS while having Broadcom Network Adapter driver version [7.35.295.2](https://www.catalog.update.microsoft.com/Search.aspx?q=Broadcom%20802.11n%20Network%20Adapter) (7/19/2015) installed. Note that this will only work with this specific version of drive.
+   On Windows, internet speed works fine as it should with link speed up to 866 Mbps. However, on macOS, speed becomes an issue. You'll notice that Tx rate is maxed at 434 Mbps with limited spatial stream to 1 (NSS=1) on cold boot. To gain its maximum capable speed, it seems that only workaround for now is to warm boot from Windows to macOS while having Broadcom Network Adapter driver version [7.35.295.2](https://www.catalog.update.microsoft.com/Search.aspx?q=Broadcom%20802.11n%20Network%20Adapter) (7/19/2015/Broadcom)  installed. Note that this will only work with this specific version of drive.
 
 Battery 
 

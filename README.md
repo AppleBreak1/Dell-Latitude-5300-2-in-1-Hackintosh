@@ -240,7 +240,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
 
   Patch:
 
-     - AppleRTC patch to disable RTC alarm wake scheduling. (Do not enable this quirk if using hibernatemode 3)
+     - AppleRTC patch to disable RTC alarm wake scheduling. (Do not enable this patch if using hibernatemode 3)
 
   Quirks:
   

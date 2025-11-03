@@ -306,6 +306,11 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
     |        [PL1][10W]
     |        [PL2][10W]
     ```
+    Disable Overclocking Lock -> VarOffset: 0x789)
+    ```
+    setup_var 0x789 0x0  (Disable)
+    setup_var 0x789 0x1  (Back to default)
+    ```
  - On default settings, the processor eventually downclocks and settles around 2.7 GHz average clock speed, 15W power consumption, and 80c temperature in longer period of use.
 
  - Setting Turbo Ratio Limit rather than disabling turbo boost

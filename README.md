@@ -201,20 +201,17 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
       |  enable-backlight-registers-fix | <01000000> | Required to prevent black screen |
       |  enable-backlight-registers-alternative-fix | <01000000> | Required to prevent black screen (Sonoma+) |
       |  framebuffer-stolenmem | <00003001> | Remove this property if DVMT is set to 64MB (Modified in Grub shell) |
-      |  framebuffer-patch-enable | <01000000> | Enables framebuffer patch 	|
-      |  framebuffer-con0-enable    | <01000000> | 	|
-      |  framebuffer-con0-alldata   | <00000800 02000000 98000000> | BusID 0; Pipe 8; LVDS 0002; Flags 0098 |
-      |  framebuffer-con1-enable    | <01000000> | 	|
-      |  framebuffer-con1-alldata   | <01010900 00080000 87010000> | BusID 1; Pipe 9; HDMI 0008; Flags 0187 |
-      |  framebuffer-con2-enable    | <01000000> | 	|
-      |  framebuffer-con2-alldata   | <02060A00 00040000 87010000> | BusID 6; Pipe 10; DP 0004; Flags 0187 |       
+      |  framebuffer-patch-enable | <01000000> | Enables IGPU framebuffer patch 	|
+      |  framebuffer-con1-enable    | <01000000> | For HDMI port patch |
+      |  framebuffer-con1-busid   | <01000000> | BusID 1; for HDMI port patch |
+      |  framebuffer-con1-type    | <00080000> | Connector type HDMI; for HDMI port patch |
       |  enable-backlight-smoother | <01000000> 	| Enable brightness control smoothing	|
       |  backlight-smoother-steps | <19000000> 	| |
       |  backlight-smoother-interval | <05000000> 	| |
       |  backlight-smoother-lowerbound | <BC020000 | Sets the built-in screen's minimum brightness level, preventing screen from going completely dark at its lowest |
       |  rps-control | <01000000> 	| Improve iGPU performance |
       |  igfxfw | <02000000> 	| Forces loading Apple GuC Firmware; either use rps-control or igfxfw |
-      |  force-online | <01000000> 	| Use this property to workaround HDMI Port not working with coldplug or after sleep|
+      |  force-online | <01000000> 	| Use this property to workaround HDMI connected monitor not detected on coldplug and sleep resume thus requiring hotplug|
 
 
       Please refer to [WhateverGreen Manual](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md) for more detailed explanation.
@@ -279,7 +276,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
   -  [3-minute Black screen](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-3-minute-black-screen-issue-on-kblcfl-platforms-running-macos-134-or-later) on built-in display for Sonoma+ -> Injecting enable-backlight-registers-alternative-fix was required to resolve this.
   -  Black screen on built-in display when rotating or connecting/disconnecting to/from external display -> This was due to using custom resolution to enable HIDPI resolution. Workaround is to set display resolution back to its default in prior and scale the resolution afterwards.
   -  Black screen on the HDMI port connected display -> bus ID of the HDMI port needs to be patched to 0x01.
-  -  HDMI port coldplug not working -> Workaround is to inject force-online property. It will still take around 10 sec to come on with couple of flickers.
+  -  HDMI port connected display not detected on coldplug and sleep resume -> Workaround is to inject force-online property. It will still take around 10 sec to come on with couple of flickers. Alternatively, you may use agdpmod=vit9696 for faster detection on boot but force-online property may still be necessary for detection on sleep resume.
   -  NO 4K resolution via external monitor -> Set DVMT Pre-allocated to 64MB using modGrubShell as this option is hidden in BIOS. (Make sure to remove framebuffer-stolenmem property)
   -  Auto-rotation feature does not work. To manually rotate the screen, press and hold option/alt key(Ventura) and go to Display setting in System Settings for rotation option to show up in display settings. Alternatively, use [displayplacer](https://github.com/jakehilborn/displayplacer). One can create multiple bash scripts for each screen resolution and simply change resolution with a click or a tap.
 

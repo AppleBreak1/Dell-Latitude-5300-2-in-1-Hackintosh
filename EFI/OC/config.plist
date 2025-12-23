@@ -203,14 +203,12 @@
 			</dict>
 			<key>PciRoot(0x0)/Pci(0x2,0x0)</key>
 			<dict>
-				<key>#force-online</key>
-				<data>
-				AQAAAA==
-				</data>
 				<key>AAPL,ig-platform-id</key>
 				<data>
 				AACbPg==
 				</data>
+				<key>agdpmod</key>
+				<string>vit9696</string>
 				<key>backlight-smoother-interval</key>
 				<data>
 				BQAAAA==
@@ -235,29 +233,21 @@
 				<data>
 				AQAAAA==
 				</data>
-				<key>framebuffer-con0-alldata</key>
-				<data>
-				AAAIAAIAAACYAAAA
-				</data>
-				<key>framebuffer-con0-enable</key>
+				<key>force-online</key>
 				<data>
 				AQAAAA==
 				</data>
-				<key>framebuffer-con1-alldata</key>
+				<key>framebuffer-con1-busid</key>
 				<data>
-				AQEJAAAIAACHAQAA
+				AQAAAA==
 				</data>
 				<key>framebuffer-con1-enable</key>
 				<data>
 				AQAAAA==
 				</data>
-				<key>framebuffer-con2-alldata</key>
+				<key>framebuffer-con1-type</key>
 				<data>
-				AgYKAAAEAACHAQAA
-				</data>
-				<key>framebuffer-con2-enable</key>
-				<data>
-				AQAAAA==
+				AAgAAA==
 				</data>
 				<key>framebuffer-patch-enable</key>
 				<data>

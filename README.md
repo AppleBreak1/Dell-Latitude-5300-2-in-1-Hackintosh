@@ -1,9 +1,10 @@
 # Dell Latitude 5300 2-in-1
 <br>
 
-<img width="600" src="https://github.com/user-attachments/assets/449ce9b6-2cf9-44c6-8945-351bef1eb913">
+| MacFlipPro |  |
+| :---: | :---: |
+| <img width="600" src="https://github.com/user-attachments/assets/449ce9b6-2cf9-44c6-8945-351bef1eb913">| <img width="210" height="361" alt="idle power consumption" src="https://github.com/user-attachments/assets/2321d61b-235d-4ebf-8956-55c18a205b79" />|
 
-<img width="210" height="361" alt="idle power consumption" src="https://github.com/user-attachments/assets/2321d61b-235d-4ebf-8956-55c18a205b79" />
 
 # Hardware Specification
 ```md
@@ -27,8 +28,8 @@
 ```
 Left side ports: 
 
-  - USB-C (USB 3.1 Gen 2 10Gbps; DisplayPort (4K60FPS); Thunderbolt port may come as an option)
-  - HDMI 1.4b (Supports up to 4K30FPS)
+  - USB-C (USB 3.1 Gen 2 10Gbps; DisplayPort (4K60Hz); Thunderbolt port may come as an option)
+  - HDMI 1.4b (Supports up to 4K30Hz)
   - USB-A (USB 3.1 Gen 1 5Gbps)
   - Smart card reader
 
@@ -55,11 +56,13 @@ Right side ports
 
 - Pen PN579X: Limited functionality but pen hovering and top barrel button (right click) works.
 
-- Display: 4K60FPS resolution via USB-C(DP-Alt-Mode) port / 4K30FPS via HDMI1.4b port / Dim display on battery
+  Note: if the pen has been paired in Windows, it can continue to function in macOS without re-pairing given that the Bluetooth supports HID Proxy.
+
+- Display: 4K60Hz resolution via USB-C(DP-Alt-Mode) port / 4K30Hz via HDMI1.4b port / Dim display on battery
 
 - Built-in Camera. (Though, much better image with using iPhone as webcam)
 
-- Audio: Built-in speaker; Headphone jack requires ALCPlugFix to get sound
+- Audio: Built-in speakers and microphone; Headphone jack requires ALCPlugFix to get sound
 
 - Battery Status
 
@@ -74,8 +77,9 @@ Right side ports
 # Not Working
 
 - DRM in Safari/Apple TV+ (Chrome browser will do)
-- Fingerprint sensor
+- Fingerprint reader
 - Screen auto-rotation
+- Infrared(IR) facial recognition
 - Wake via built-in trackpad/keyboard
 
 # macOS
@@ -95,7 +99,7 @@ macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also
 
   - macOS Sonoma
 
-    - To install or update to Sonoma 14.4+, SecureBootModel needs to be disabled.
+    - To install or update to Sonoma 14.4+, SecureBootModel needs to be set to Disabled.
     - To fix black screen on internal display for Sonoma+, Injecting [enable-backlight-registers-alternative-fix](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-3-minute-black-screen-issue-on-kblcfl-platforms-running-macos-134-or-later) property is necessary
     - For macOS Sonoma+, Broadcom Wi-Fi has to depend on [OCLP](https://github.com/dortania/OpenCore-Legacy-Patcher) patch to be functional.
 
@@ -154,7 +158,7 @@ BIOS Version: 1.32.0
 Note: 
 
   - [Why disable CFG Lock?](https://dortania.github.io/OpenCore-Post-Install/misc/msr-lock.html#what-is-cfg-lock)
-  - Once the DVMT Pre-Allocated is set to 64MB, make sure to remove framebuffer-stolenmem property from the config.plist as this will ensure 4K60FPS resolution option is enabled via (USB-C/DP-Alt-Mode). The HDMI port on this laptop will only support up to 4K30FPS with capable external monitor.
+  - Once the DVMT Pre-Allocated is set to 64MB, make sure to remove framebuffer-stolenmem property from the config.plist as this will ensure 4K60Hz resolution option is enabled via (USB-C/DP-Alt-Mode). The HDMI port on this laptop will only support up to 4K30Hz with capable external monitor.
   - USB Wake support does not show up as an option in BIOS menu and there is only a checkbox option for "Wake on Dell USB-C dock". At [r/Dell](https://www.reddit.com/r/Dell/comments/mgipwl/dell_can_you_please_add_proper_enable_usb_wake/), there are some posts complaining about this issue. Nonetheless, the option is there, hidden. If this option is disabled as in default, the BIOS will remove power from all of the USB ports. This causes a problem with Bluetooth, connected USB drives, and more.
     
     Upon waking, it will take a while for Bluetooth to reconnect and with lid open wake, notice blutoothd process taking high CPU usage around 200% that the Bluetooth has to be toggled off/on to stop the high CPU usage. As for the connected external USB drives, of course there is going to be a "Disk not ejected properly" pop-up every time.
@@ -176,7 +180,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
      - SSDT-EC-USBX.aml  (Fake embedded controller with USB power properties)
      - SSDT-GPI0.aml     (Ensures VoodooGPI0 is attached to GPI0 for trackpad and touchscreen to work)
      - SSDT-LPCB.aml     (Injects fake devices, ARTC, DMAC, FWHD, and PMCR; cosmetic)
-     - SSDT-MCHC.aml     (Injects fake MCHC device)
+     - SSDT-MCHC.aml     (Injects MCHC device)
      - SSDT-PLUG.aml     (Injects plugin type 1 to load XCPM for CPU PMGMT; No longer required beginning with Monterey 12.3)
      - SSDT-PNLF.aml     (Fixes backlight control -> brightness control)
      - SSDT-USBP.aml     (ACPI USB Port Mapping Table; correctly define USB connector type for each USB ports and disable unused ports at ACPI level using GUPC and TUPC method)
@@ -272,11 +276,11 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
 
   Display 
 
-  -  Black screen on built-in display -> Injecting enable-backlight-registers-fix was required to resolve this.
-  -  [3-minute Black screen](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-3-minute-black-screen-issue-on-kblcfl-platforms-running-macos-134-or-later) on built-in display for Sonoma+ -> Injecting enable-backlight-registers-alternative-fix was required to resolve this.
+  -  Black or dimmed screen on built-in display -> Injecting enable-backlight-registers-fix was required to resolve this.
+  -  3-minute black or dimmed screen on built-in display for Sonoma+ -> Injecting [enable-backlight-registers-alternative-fix](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-3-minute-black-screen-issue-on-kblcfl-platforms-running-macos-134-or-later) was required to resolve this.
   -  Black screen on built-in display when rotating or connecting/disconnecting to/from external display -> This was due to using custom resolution to enable HIDPI resolution. Workaround is to set display resolution back to its default in prior and scale the resolution afterwards.
   -  HDMI port connected display detection -> bus ID of the HDMI port(Index 1) needs to be patched to 0x01 and connector type to HDMI.
-  -  HDMI port connected display not detected on coldplug and sleep resume -> Workaround is to inject force-online property. It will still take around 10 sec to come on with couple of flickers. Alternatively, you may use agdpmod=vit9696 for faster detection on boot but force-online property may still be necessary for detection on sleep resume.
+  -  HDMI port connected display not detected on coldplug and sleep resume -> Workaround is to inject force-online property. It will still take around 10 sec to come on with couple of flickers. Alternatively, you may use agdpmod=vit9696 for faster detection on boot but force-online property may still be necessary for detection on sleep resume. (Please do note that using force-online property sometimes may cause WindowServer crash on wake, initially showing black screen with cursor then eventually log out from current session leading to login screen)
   -  NO 4K resolution via external monitor -> Set DVMT Pre-allocated to 64MB using modGrubShell as this option is hidden in BIOS. (Make sure to remove framebuffer-stolenmem property)
   -  Auto-rotation feature does not work. To manually rotate the screen, press and hold option/alt key(Ventura) and go to Display setting in System Settings for rotation option to show up in display settings. Alternatively, use [displayplacer](https://github.com/jakehilborn/displayplacer). One can create multiple bash scripts for each screen resolution and simply change resolution with a click or a tap.
 
@@ -328,7 +332,16 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
             ./voltageshift write 0x1ad 0x1e1e1e1e    // limit to 30 for all number of active cores
             ./voltageshift write 0x1ad 0x24242424    // limit to 36 for all number of active cores
             ./voltageshift write 0x1ad 0x1e1e1e24    // limit to 30 for 2 to 4 active cores and limit to 36 for 1 active core
+
+      - Confirm the changes made
+
+            ./voltageshift mon
+            ./voltageshift info
   
+        <img width="563" height="210" alt="Monitor 2" src="https://github.com/user-attachments/assets/20411ae3-0428-431e-82bf-bfa843cd2c2d" />
+
+
+        
  - Power consumption can be further reduced by disabling SD card reader. When the microSD card reader is enabled, CPU package does not enter C-state deeper than C3 at idle. In order to achieve similar level of power consumption as Windows side where the CPU reaches C8 state at idle, SD card reader needs to be disabled. (Disabling touchscreen, camera, and any other unused devices at BIOS level may help as well)
  
  - Powermetrics Report
@@ -364,7 +377,7 @@ Num Lock (Enable)
    
    - Hibernatemode 0
 
-     - Completely disables hibernation
+     - Completely disables hibernation(S4)
 
    - Hibernatemode 3  
 
@@ -374,32 +387,32 @@ Num Lock (Enable)
       - Misc -> Boot -> HibernateSkipsPicker -> Yes
       - Do not apply AppleRTC kernel patch if applied (patch to disable RTC wake scheduling)
       - Inject [HibernationFixup.kext](https://github.com/acidanthera/HibernationFixup)
-      - Add boot-arg -> hbfx-ahbm=5 (Need this flag with value of at least 1 to put system in standby mode; refer to its [manual](https://github.com/acidanthera/HibernationFixup) for various configuration)
-      - Set standbydelay time that suits your need in terminal (This sets the RTC alarm wake scheduling). The system will darkwake from normal sleep as set by standbydelay argument then decides whether to transition to standby mode. If transitions to standby, it saves current session to disk in var/vm/sleepimage and turns off some of the hardware systems to save power)
+      - Add boot-arg -> hbfx-ahbm=5 (Need this flag with value of at least 1 to put system in Standby(S4) mode; refer to its [manual](https://github.com/acidanthera/HibernationFixup) for various configuration)
+      - Set standbydelay time that suits your need in terminal (This sets the RTC alarm wake scheduling). The system will darkwake from normal sleep as set by standbydelay argument then decides whether to transition to Standby mode. If transitions to Standby, it saves current session to disk in var/vm/sleepimage and turns off some of the hardware systems to save power)
 
             Sudo pmset -a standbydelay 7200    (In seconds; This will put the system in standby mode after 2 hours of normal sleep)
 
 
 
-        **Power event log after waking up from standby mode with hibernatemode 3**
+        **Power event log after waking up from Standby mode with hibernatemode 3**
         <img width="996" alt="H3" src="https://github.com/user-attachments/assets/1cbb0e84-555d-4e14-ab93-16815d803695">
 
 
         
 
           - 00:23:11 - The system initiates sleep upon lid closing and goes into normal sleep.
-          - 02:23:33 - The system darkwakes after 2 hours(RTC alarm wake schedule set by standbydelay 7200) of normal sleep
+          - 02:23:33 - The system darkwakes after 2 hours(RTC alarm wake schedule set by standbydelay 7200) of normal sleep(S3)
 
                      (The battery drain during the normal sleep of 2 hour frame is around 3%)
             
-          - 2:23:38 - The System transitions from normal sleep state to standby mode
+          - 2:23:38 - The System transitions from normal sleep state to Standby mode
           - 7:59:38 - The System wakes from standby after 5 hours due to user intervention
 
                      (The battery drain during 5 hours of standby is 0% )
    
    - Hibernatemode 25 (pmset standby to 1)
 
-      Hibernatemode 25 will immediately put system to standby preserving battery life. 
+      Hibernatemode 25 will immediately put system to Standby(S4) preserving battery life. 
      
       - pmset hibernatemode to 25
       - pmset standby to 1
@@ -412,18 +425,18 @@ Num Lock (Enable)
           
 
 
-         **Power event log after waking up from standby mode with hibernatemode 25**
+         **Power event log after waking up from Standby mode with hibernatemode 25**
         <img width="946" alt="H25" src="https://github.com/user-attachments/assets/7bffe194-8c06-41c8-ab49-35ce1c796b39">
 
        
 
-           - 11:41:15 - The system initiates idle sleep and goes into standby mode immediately.
+           - 11:41:15 - The system initiates idle sleep and goes into Standby mode immediately.
            - 18:02:35 - The System wakes from standby after 6 hours due to user intervention
 
                   (The battery drain during 6 hours of standby is 0% )
 
 
-      - Note that when in standby mode, the system could only wake via power button and it will continue from splash screen then straight into macOS if HibernateSkipsPicker is set to Yes
+      - Note that when in Standby mode, the system could only wake via power button and it will continue from splash screen then straight into macOS if HibernateSkipsPicker is set to Yes
                
 **Hardware**
 
@@ -447,7 +460,7 @@ Battery
 
  - N2K62 LCL (60 WHr, Long Cycle Life /1000 charge cycle) pack. At the time of testing, battery max capacity at 71.6% due to battery degradation.
  - In BIOS, battery is configured to be start charging when below 50% and stop charging when at 83%
- - Based on the testing with above setup and brightness level around 80%, the battery would last about 3 hrs when watching the 1080P 60FPS Youtube video. The CPU total package power consumption reporting during the video playback arounds 2.5W ~ 3.5W.
+ - Based on the testing with above setup and brightness level around 80%, the battery would last about 3 hrs when watching the 1080P 60Hz Youtube video. The CPU total package power consumption reporting during the video playback arounds 2.5W ~ 3.5W.
  - Disabling touchscreen and reducing brightness level may help with preserving battery life. 
    
 

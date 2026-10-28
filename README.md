@@ -348,7 +348,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
   
         <img width="563" height="210" alt="Monitor 2" src="https://github.com/user-attachments/assets/20411ae3-0428-431e-82bf-bfa843cd2c2d" />
 
- - Inject NVMEFix.kext to enable proper power saving and lower idle power consumption. Without this kext, CPU package does not enter deeper than C2 state at idle.  
+ - Inject [NVMeFix](https://github.com/acidanthera/NVMeFix) to enable proper power saving and lower idle power consumption on NVMe drive as without this kext, CPU package does not enter deeper than C2 state at idle.  
         
  - Power consumption can be further reduced by disabling SD card reader. When the microSD card reader is enabled, CPU package does not enter C-state deeper than C3 at idle. In order to achieve similar level of power consumption as Windows side where the CPU reaches C8 state at idle, SD card reader needs to be disabled. (Disabling touchscreen, camera, and any other unused devices at BIOS level may help as well)
  

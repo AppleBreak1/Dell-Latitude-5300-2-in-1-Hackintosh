@@ -105,10 +105,10 @@ macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also
 
   - macOS Tahoe
 
-    - Thanks to [Laobamac](https://github.com/laobamac), onboard audio and Broadcom/Intel Wi-Fi do not require system root patches on MacOS Tahoe.
+    - Thanks to [Laobamac](https://github.com/laobamac), onboard audio and Broadcom/Intel Wi-Fi do not require system root patches on macOS Tahoe.
     - [SimpleBCM](https://github.com/laobamac/SimpleBCM) (For Broadcom Wi-Fi without system root patches)
     - Laobamac's [AirportItlwm](https://github.com/laobamac/itlwm) (For Intel Wi-Fi without system root patches)
-    - [SimpleHDA](https://github.com/laobamac/SimpleHDA) (For onboard Audio without system root patches; make sure to add keepsyms=1)
+    - [SimpleHDA](https://github.com/laobamac/SimpleHDA) (For onboard audio without system root patches; make sure to add keepsyms=1)
     - [IntelBluetoothFirmware](https://github.com/lshbluesky/IntelBluetoothFirmware) (Updated for macOS Tahoe, thanks to [lshbluesky](https://github.com/lshbluesky))
     
 # BIOS Settings

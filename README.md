@@ -103,6 +103,14 @@ macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also
     - To fix black screen on internal display for Sonoma+, Injecting [enable-backlight-registers-alternative-fix](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-3-minute-black-screen-issue-on-kblcfl-platforms-running-macos-134-or-later) property is necessary
     - For macOS Sonoma+, Broadcom Wi-Fi has to depend on [OCLP](https://github.com/dortania/OpenCore-Legacy-Patcher) patch to be functional.
 
+  - macOS Tahoe
+
+    - Thanks to [Laobamac](https://github.com/laobamac), onboard audio and Broadcom/Intel Wi-Fi do not require system root patches on MacOS Tahoe.
+    - [SimpleBCM](https://github.com/laobamac/SimpleBCM) (For Broadcom Wi-Fi without system root patches)
+    - Laobamac's [AirportItlwm](https://github.com/laobamac/itlwm) (For Intel Wi-Fi without system root patches)
+    - [SimpleHDA](https://github.com/laobamac/SimpleHDA) (For onboard Audio without system root patches; make sure to add keepsyms=1)
+    - [IntelBluetoothFirmware](https://github.com/lshbluesky/IntelBluetoothFirmware) (Updated for macOS Tahoe, thanks to [lshbluesky](https://github.com/lshbluesky))
+    
 # BIOS Settings
 
 BIOS Revision: 1.32.0
@@ -233,7 +241,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
      - [CPUFriend](https://github.com/acidanthera/CPUFriend)/[CPUFriendDataProvider](https://github.com/corpnewt/CPUFriendFriend) (Configure CPU powermanagement)
      - [VoltageShift](https://github.com/sicreative/VoltageShift) (To disable Intel Turbo Boost, undervolt, and set Power Limit(PL1,PL2); the kext itself won't do anything unless the settings are configured at OS level; undervolting requires unlocking Overclock Lock in BIOS mod)
      - [RealtekCardReader](https://github.com/0xFireWolf/RealtekCardReader)/RealtekCardReaderFriend (For microSD card reader)
-     - NVMeFix
+     - [NVMeFix](https://github.com/acidanthera/NVMeFix) (Enables power savings on non-Apple NVMe drives)
      - VoodooPS2Controller/VoodooPS2Keyboard (For Keyboard)
      - [VoodooI2C](https://github.com/VoodooI2C/VoodooI2C)/VoodooInput/VoodooI2CServices/VoodooGPIO/VoodooI2CHID (For Trackpad/Touchscreen)
      - [BrightnessKeys.kext](https://github.com/acidanthera/BrightnessKeys) (For Brightness keys to work; use with SSDT-ACOS.aml)
@@ -340,7 +348,7 @@ Mostly follow laptop, [Whiskey-Lake](https://dortania.github.io/OpenCore-Install
   
         <img width="563" height="210" alt="Monitor 2" src="https://github.com/user-attachments/assets/20411ae3-0428-431e-82bf-bfa843cd2c2d" />
 
-
+ - Inject NVMEFix.kext to enable proper power saving and lower idle power consumption. Without this kext, CPU package does not enter deeper than C2 state at idle.  
         
  - Power consumption can be further reduced by disabling SD card reader. When the microSD card reader is enabled, CPU package does not enter C-state deeper than C3 at idle. In order to achieve similar level of power consumption as Windows side where the CPU reaches C8 state at idle, SD card reader needs to be disabled. (Disabling touchscreen, camera, and any other unused devices at BIOS level may help as well)
  
@@ -451,6 +459,8 @@ Wi-Fi/Bluetooth
  - Comes with Intel Dual Band Wireless AC 9560 -> Swapped with BCM94360NG module to enjoy Airplay/Airdrop/continuity features. MHF4 extension cable was required as one(main) of the two antenna cables was a bit short to reach the main antenna port on BCM94360 module. Altenatively, you may utilize extra IPX MHF4 antenna and place it somewhere inside the laptop (It is very compact however).
 
  - BCM94360NG speed issue with macOS
+
+   This issue has been resolved with AirportBrcmFixup V2.2.1. One should add brcmfx-aspm=255 boot-arg to prevent AirportBrcmFixup from disabling ASPM. Thanks to [maddog860](https://github.com/maddog860) for the fix. The reference below is for historical purpose. 
 
    You will find discussion about this problem from Acidenthera bugtracker #[1532](https://github.com/acidanthera/bugtracker/issues/1532) with possible workaround
    

@@ -13,7 +13,7 @@
 - EFI-Intel-Wifi
 
   - System Integrity Protection fully enabled
-  - Working Intel Wi-Fi with AirportItlwm without a root volume patch, courtesy of Laobamac's [AirportItlwm]([https://github.com/laobamac/SimpleBCM](https://github.com/laobamac/itlwm)
+  - Working Intel Wi-Fi with AirportItlwm without a root volume patch, courtesy of Laobamac's [AirportItlwm](https://github.com/laobamac/itlwm)
   - Working Wi-Fi in macOS installer and recovery system.
   - BlueToolFixup.kext is disabled by default. Enable it after a macOS update/installation for functional bluetooth.
   - Working onboard audio without a root volume patch, courtesy of Laobamac's [SimpleHDA](https://github.com/laobamac/SimpleHDA) 
